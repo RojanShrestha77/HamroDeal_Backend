@@ -1,0 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
+export const PORT: number = process.env.PORT? parseInt(process.env.PORT): 5050;
+
+export const MONGODB_URI: string = process.env.MONGO_URI|| "mongodb://localhost:27017//default_db";
+// IF MONGODB_URL IS not defined in.env, use local/backup mongodb is default
+
+export const JWT_SCERET: string = process.env.JWT_SECRET || "mern_scret";
