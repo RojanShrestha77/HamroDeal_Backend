@@ -7,7 +7,8 @@ import authRoutes from './routes/auth.routes';
 import categoryRoutes from "./routes/category.routes";
 import adminUserRoutes from './routes/admin/user.route'
 import productRoutes from './routes/product.routes';
-import sellerRoutes from './routes/seller/seller.route'
+import sellerRoutes from './routes/seller/seller.route';
+import cartRoutes from './routes/cart/cart.routes';
 import cors from 'cors';
 import path from 'path';
 import { HttpError } from './errors/http-error';
@@ -38,6 +39,8 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 app.use('/api/auth', authRoutes);
+
+app.use('/api/cart', cartRoutes);
 
 app.use('/api/categories', categoryRoutes); 
 
