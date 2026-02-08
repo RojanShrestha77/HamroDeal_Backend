@@ -101,7 +101,7 @@ export class AuthController {
 
     async updateUserById(req: Request, res: Response){
         try {
-            const userId = req.params.id;
+const userId = Array.isArray(req.user?._id) ? req.user!._id[0] : req.user?._id;
             if(req.user!.role !== "admin" && req.user!._id.toString() !== userId){
                 return res.status(403).json({success:false, message: 'Access Forbidden'}); 
             }

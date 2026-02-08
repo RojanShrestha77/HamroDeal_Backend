@@ -52,7 +52,7 @@ export class CategoryUserController {
 
     async getCategoryById(req: Request, res: Response) {
         try {
-            const categoryId = req.params.id;
+const categoryId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
             const category = await categoryUserService.getCategoryById(categoryId);
             return res.json( {
                 success: true,
@@ -72,7 +72,9 @@ export class CategoryUserController {
 
     async updateCategory(req: Request, res: Response) {
         try {
-            const {id} = req.params;
+           const idRaw = req.params.id;
+           const id = Array.isArray(idRaw) ? idRaw[0] : idRaw;
+
             const parsedData = UpdateCategoryDto.safeParse(req.body);
             if(!parsedData.success){
                 return res.status(400).json({
@@ -99,7 +101,8 @@ export class CategoryUserController {
 
      async deleteCategory(req: Request, res: Response) {
         try {
-            const { id } = req.params;
+            const idRaw = req.params.id;
+             const id = Array.isArray(idRaw) ? idRaw[0] : idRaw;
             const result = await categoryUserService.deleteCategory(id);
             return res.json({
                 success: true,
