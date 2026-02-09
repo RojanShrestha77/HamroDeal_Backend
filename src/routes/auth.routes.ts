@@ -14,8 +14,6 @@ router.get("/whoami", authorizedMiddleware, authController.getUserById);
 
 router.put('/update-profile', authorizedMiddleware, uploads.single('image'), authController.updatedProfile)
 router.put('/:id', authorizedMiddleware, uploads.single('image'), authController.updateUserById)
-// router.post(
-//     "/send-reset-password-email",
-//     authController.requestPasswordChange
-// )
+router.post("/request-password-reset", authController.requestPasswordChange);
+router.post("/reset-password/:token", authController.resetPassword)
 export default router;

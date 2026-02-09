@@ -3,7 +3,7 @@ import { IUser } from "../models/user.model";
 import { UserRepository } from "../repositories/user.repositories";
 import jwt from 'jsonwebtoken';
 import { HttpError } from "../errors/http-error";
-import { JWT_SCERET } from "../configs";
+import { JWT_SECRET } from "../configs";
 
 declare global {
     namespace Express {
@@ -22,7 +22,7 @@ async(req: Request, res: Response, next: NextFunction) => {
         if(!authHeader || !authHeader.startsWith('Bearer'))  // ✅ Added !
             throw new HttpError(401, 'Unauhtorized JWT Invalid');
         const token = authHeader.split(' ')[1]  // ✅ Changed '' to ' '
-        const decodedToken = jwt.verify(token, JWT_SCERET) as Record<string, any>;
+        const decodedToken = jwt.verify(token, JWT_SECRET) as Record<string, any>;
         if(!decodedToken || !decodedToken.id){  // ✅ Also add ! here
             throw new HttpError(401, "Unauthorized JWT Unverified");
         }

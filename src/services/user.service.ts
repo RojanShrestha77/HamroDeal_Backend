@@ -3,8 +3,8 @@ import { HttpError } from "../errors/http-error";
 import { UserRepository } from "../repositories/user.repositories";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { JWT_SCERET } from "../configs";
 import { sendEmail } from "../configs/email";
+import { JWT_SECRET } from "../configs";
 
 let userRepository = new UserRepository();
 
@@ -46,7 +46,7 @@ export class UserService {
             role:user.role
         }
         // sign = create a token
-        const token = jwt.sign(payload,JWT_SCERET,{expiresIn:'30m'});
+        const token = jwt.sign(payload,JWT_SECRET,{expiresIn:'30m'});
         return {token,user}; 
     }
 
@@ -96,11 +96,29 @@ export class UserService {
         if (!user) {
             throw new HttpError(404, "User not found");
         }
-        const token = jwt.sign({ id: user._id }, JWT_SCERET, { expiresIn: '1h' }); // 1 hour expiry
+        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' }); // 1 hour expiry
         const resetLink = `${CLIENT_URL}/reset-password?token=${token}`;
         const html = `<p>Click <a href="${resetLink}">here</a> to reset your password. This link will expire in 1 hour.</p>`;
         await sendEmail(user.email, "Password Reset", html);
         return user;
+    }
+    async resetPassword(token?: string, newPassword?: string) {
+        try {
+            if (!token || !newPassword) {
+                throw new HttpError(400, "Token and new password are required");
+            }
+            const decoded: any = jwt.verify(token, JWT_SECRET);
+            const userId = decoded.id;
+            const user = await userRepository.getUserByID(userId);
+            if (!user) {
+                throw new HttpError(404, "User not found");
+            }
+            const hashedPassword = await bcryptjs.hash(newPassword, 10);
+            await userRepository.updateUser(userId, { password: hashedPassword });
+            return user;
+        } catch (error) {
+            throw new HttpError(400, "Invalid or expired token");
+        }
     }
 }
 

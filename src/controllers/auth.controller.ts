@@ -1,9 +1,8 @@
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from "../dtos/user.dto";
-import z, { success } from 'zod';
+import z from 'zod';
 import {Request, Response} from 'express';
 import { UserService } from "../services/user.service";
-import { HttpError } from "../errors/http-error";
-import { ca } from "zod/v4/locales";
+
 
 let userService = new UserService();
 
@@ -101,7 +100,7 @@ export class AuthController {
 
     async updateUserById(req: Request, res: Response){
         try {
-const userId = Array.isArray(req.user?._id) ? req.user!._id[0] : req.user?._id;
+            const userId = Array.isArray(req.user?._id) ? req.user!._id[0] : req.user?._id;
             if(req.user!.role !== "admin" && req.user!._id.toString() !== userId){
                 return res.status(403).json({success:false, message: 'Access Forbidden'}); 
             }
@@ -126,6 +125,40 @@ const userId = Array.isArray(req.user?._id) ? req.user!._id[0] : req.user?._id;
             return res.status(error.statusCode ?? 500).json({
                 success: false, message: error.message || "Internal Server Error"
             })
+        }
+    }
+
+    async requestPasswordChange(req: Request, res:Response)  {
+        try {
+            const { email} = req.body;
+            const user = await userService.sendResetPasswordEmail(email);
+            return res.status(200).json(
+                {
+                    success: true,
+                    data: user,
+                    message: "Password reset email sent"
+                }
+            )
+        }catch (error: Error | any) {
+            return res.status(error.statusCode || 500).json(
+                { success: false, message: error.message || "Internal Server Error" }
+            )
+        }
+    }
+
+       async resetPassword(req: Request, res: Response) {
+        try {
+
+            const rawToken = req.params.token;
+            const token = Array.isArray(rawToken) ? rawToken[0] : rawToken;            const { newPassword } = req.body;
+            await userService.resetPassword(token, newPassword);
+            return res.status(200).json(
+                { success: true, message: "Password has been reset successfully." }
+            );
+        } catch (error: Error | any) {
+            return res.status(error.statusCode ?? 500).json(
+                { success: false, message: error.message || "Internal Server Error" }
+            );
         }
     }
 }
