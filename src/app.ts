@@ -12,6 +12,7 @@ import cartRoutes from './routes/cart/cart.routes';
 import cors from 'cors';
 import path from 'path';
 import { HttpError } from './errors/http-error';
+import wishlistRoutes from './routes/wishlist.routes';
 
 dotenv.config();
 
@@ -39,6 +40,8 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 app.use('/api/auth', authRoutes);
+
+app.use('/api/wishlist', wishlistRoutes);
 
 app.use('/api/cart', cartRoutes);
 

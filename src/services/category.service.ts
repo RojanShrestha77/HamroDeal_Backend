@@ -71,7 +71,7 @@ export class CategoryUserService{
         }
 
         const result = await categoryRepository.deleteCategory(categoryId);
-        if(result){
+        if(!result){
             throw new HttpError(500, "Failed to delete category");
         }
         return { message: 'Category deleted successfully'}
