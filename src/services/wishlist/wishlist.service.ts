@@ -4,9 +4,9 @@ import { IUser } from "../../models/user.model";
 import { ProductRepository } from "../../repositories/product.repositories";
 import { WishlistResponse } from "../../types/wishlist.type";
 import { AddToWishlistDto } from "../../dtos/wishlist.dto";
-import { WishListRepository } from "../../repositories/wishlist.repositories";
+import { WishlistRepository } from "../../repositories/wishlist.repositories";
 
-const wishlistRepository = new WishListRepository();
+const wishlistRepository = new WishlistRepository();
 const productRepository = new ProductRepository();
 
 export class WishlistService {
