@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 
 // cart interm interface
@@ -47,7 +47,7 @@ const CartSchema = new Schema<ICart>(
         },
         items: {
             type: [CartItemSchema],
-            defaul: [],
+            default: [],
         }
     },
     {

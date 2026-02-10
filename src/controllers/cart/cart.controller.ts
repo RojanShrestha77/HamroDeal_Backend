@@ -2,7 +2,7 @@ import { CartService } from "../../services/cart/cart.service";
 import { IUser } from "../../models/user.model";
 import { AddToCartDto, UpdateCartItemDto } from "../../dtos/cart.dtos";
 import { Request, Response } from "express";
-import z  from "zod";
+import {z}  from "zod";
 const cartService = new CartService();
 
 export class CartController{
@@ -58,16 +58,11 @@ export class CartController{
         }
     }
 
-    async updateCartItem(req: Request, res: Response) {
+    async updateCartItem(req: Request<{productId: string}>, res: Response) {
         try {
             const user = req.user as IUser;
             const {productId} = req.params;
-            if (typeof productId !== 'string') {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid product ID"
-            });
-        }
+          
 
             const parsedData = UpdateCartItemDto.safeParse(req.body);
 
@@ -100,17 +95,10 @@ export class CartController{
     }
 
     // delete
-    async removeFromCart(req: Request, res:Response) {
+    async removeFromCart(req: Request<{productId: string}>, res:Response) {
         try {
             const user = req.user as IUser;
             const {productId} = req.params;
-
-            if (typeof productId !== 'string') {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid product ID"
-            });
-        }
 
             const cart = await cartService.removeFromCart(user, productId);
 
