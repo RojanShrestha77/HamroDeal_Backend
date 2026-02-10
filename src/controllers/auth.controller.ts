@@ -150,7 +150,8 @@ export class AuthController {
         try {
 
             const rawToken = req.params.token;
-            const token = Array.isArray(rawToken) ? rawToken[0] : rawToken;            const { newPassword } = req.body;
+            const token = Array.isArray(rawToken) ? rawToken[0] : rawToken;            
+            const { newPassword } = req.body;
             await userService.resetPassword(token, newPassword);
             return res.status(200).json(
                 { success: true, message: "Password has been reset successfully." }

@@ -13,6 +13,8 @@ import cors from 'cors';
 import path from 'path';
 import { HttpError } from './errors/http-error';
 import wishlistRoutes from './routes/wishlist.routes';
+import adminBlogRoutes from './routes/admin/blog.route';
+import blogRoutes from './routes/blog.route'
 
 dotenv.config();
 
@@ -41,6 +43,9 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use('/api/auth', authRoutes);
 
+app.use('/api/admin/blogs', adminBlogRoutes)
+
+app.use('/api/blogs/', blogRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 
 app.use('/api/cart', cartRoutes);
