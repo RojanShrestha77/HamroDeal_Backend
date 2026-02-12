@@ -14,7 +14,10 @@ import path from 'path';
 import { HttpError } from './errors/http-error';
 import wishlistRoutes from './routes/wishlist.routes';
 import adminBlogRoutes from './routes/admin/blog.route';
-import blogRoutes from './routes/blog.route'
+import blogRoutes from './routes/blog.route';
+import orderRoutes from './routes/order.routes';
+import sellerOrderRoutes from './routes/seller/order.routes';
+import adminOrderRoutes from './routes/admin/order.routes';
 
 dotenv.config();
 
@@ -42,6 +45,16 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 app.use('/api/auth', authRoutes);
+
+// normal order routes(user)
+app.use('/api/orders', orderRoutes);
+
+// seller order routes
+app.use('/api/seller/orders', sellerOrderRoutes);
+
+// admin order routes
+app.use('/api/admin/orders', adminOrderRoutes);
+
 
 app.use('/api/admin/blogs', adminBlogRoutes)
 

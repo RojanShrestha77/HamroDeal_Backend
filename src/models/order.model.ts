@@ -84,10 +84,17 @@ const OrderSchema = new Schema<IOrder>(
   { timestamps: true }
 );
 
-OrderSchema.pre("save", async function (this: IOrder) {
-    if (!this.orderNumber) {
-        const count = await mongoose.model("Order").countDocuments();
-        this.orderNumber = `ORD-${Date.now()}-${count + 1}`;
-    }
+// OrderSchema.pre("save", async function (this: IOrder) {
+//     if (!this.orderNumber) {
+//         const count = await mongoose.model("Order").countDocuments();
+//         this.orderNumber = `ORD-${Date.now()}-${count + 1}`;
+//     }
+// });
+OrderSchema.pre("validate", function () {
+  if (!this.orderNumber) {
+    const rand = new mongoose.Types.ObjectId().toString().slice(-6).toUpperCase();
+    this.orderNumber = `ORD-${Date.now()}-${rand}`;
+  }
 });
+
 export const OrderModel = mongoose.model<IOrder>("Order", OrderSchema);
