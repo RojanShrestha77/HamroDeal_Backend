@@ -38,59 +38,70 @@ export class OrderService {
 
     async getOrderById(id: string) {
         const order = await orderRepo.findById(id);
-        if(!order) {
+        if (!order) {
             throw new HttpError(404, "Order not found");
         }
         return order;
     }
 
-    async getUserorders(userId: string, page: number =1, size:number=10) {
+    async getUserorders(userId: string, page: number = 1, size: number = 10) {
         const { orders, total } = await orderRepo.findByUserId(userId, page, size);
         const pagination = {
-            page, 
+            page,
             size,
             total,
-            totalPages: Math.ceil(total/size)
+            totalPages: Math.ceil(total / size)
         };
-        return { orders, pagination};
+        return { orders, pagination };
 
     }
 
     async getSellerOrders(sellerId: string, page: number = 1, size: number = 10) {
-        const {orders, total} = await orderRepo.findBySellerId(sellerId, page, size);
-            const pagination = {
-                page,
-                size,
-                total,
-                totalPages: Math.ceil(total/ size)
+        const { orders, total } = await orderRepo.findBySellerId(sellerId, page, size);
+
+        const filteredOrders = orders.map(order => {
+            const sellerItems = order.items.filter(
+                item => item.sellerId.toString() === sellerId
+            );
+
+            return {
+                ...order.toObject(),
+                items: sellerItems, // Only seller's items
             };
-            return { orders, pagination};
+        });
+        const pagination = {
+            page,
+            size,
+            total,
+            totalPages: Math.ceil(total / size)
+        };
+        return { orders: filteredOrders, pagination };
     }
 
     async getAllOrders(page: number = 1, size: number = 10, status?: string) {
-        const {orders, total} = await orderRepo.findAll(page, size, status);
+        const { orders, total } = await orderRepo.findAll(page, size, status);
         const pagination = {
-            page, 
+            page,
             size,
             total,
-            totalPages: Math.ceil(total/size)
+            totalPages: Math.ceil(total / size)
         };
-        return {orders, pagination}
+        return { orders, pagination }
     }
 
-    async updateOrderStatus(id: string, stauts: string, userId?: string, userRole?: string ){
+    async updateOrderStatus(id: string, stauts: string, userId?: string, userRole?: string) {
         const order = await orderRepo.findById(id);
-        if(!order) {
+        if (!order) {
             throw new HttpError(404, "Order not found");
         }
 
         // Authorizxation check
-        if(userRole !== "admin") {
-            if(userRole === "seller" ) {
+        if (userRole !== "admin") {
+            if (userRole === "seller") {
                 const hasSellersProduct = order.items.some(
                     item => item.sellerId.toString() === userId
                 );
-                if(!hasSellersProduct) {
+                if (!hasSellersProduct) {
                     throw new HttpError(403, "You are not authorized to update this order");
                 }
             } else {
@@ -102,15 +113,15 @@ export class OrderService {
     async cancelorder(id: string, userId: string) {
         const order = await orderRepo.findById(id);
 
-        if(!order){
+        if (!order) {
             throw new HttpError(404, "Order not found");
         }
 
-        if(order.userId.toString() !== userId){
+        if (order.userId.toString() !== userId) {
             throw new HttpError(403, "You are not authorized to cancel this order");
         }
 
-        if(order.status !== "pending" && order.status !== "processing"){
+        if (order.status !== "pending" && order.status !== "processing") {
             throw new HttpError(400, "Cannot cancel order in teh current status")
         }
 
