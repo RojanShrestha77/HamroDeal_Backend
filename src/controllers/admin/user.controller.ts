@@ -164,4 +164,30 @@ export class AdminUserController {
       });
     }
   }
+
+  async getUserDetailPage(req: Request, res: Response) {
+    try {
+        const userId = asString(req.params.id);
+        if (!userId) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "User id is required" 
+            });
+        }
+
+        const userDetails = await adminUserService.getUserDetailPage(userId);
+        
+        return res.status(200).json({
+            success: true,
+            message: "User details successfully fetched",
+            data: userDetails,
+        });
+    } catch (error: any) {
+        return res.status(error.statusCode || 500).json({
+            success: false,
+            message: error.message || "Internal Server Error",
+        });
+    }
+}
+
 }

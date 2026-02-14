@@ -3,7 +3,11 @@ import { HttpError } from "../../errors/http-error";
 import { UserRepository } from "../../repositories/user.repositories";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
-import { IUser } from "../../models/user.model";
+import { IUser, UserModel } from "../../models/user.model";
+import { OrderModel } from "../../models/order.model";
+import { ProductModel } from "../../models/product.model";
+import { WishlistModel } from "../../models/wishlist.model";
+import { CartModel } from "../../models/cart.model";
 let userRepository = new UserRepository;
 
 export class AdminUserService {
@@ -98,6 +102,90 @@ export class AdminUserService {
             throw new HttpError(500, "Failed to approve User");
         }
         return approveSeller;
+    }
+
+    async getUserDetailPage(userId: string) {
+        // Get user basic info
+        const user = await UserModel.findById(userId)
+            .select('-password')
+            .lean();
+
+        if (!user) {
+            const error: any = new Error("User not found");
+            error.statusCode = 404;
+            throw error;
+        }
+
+        // Get user's orders
+        const orders = await OrderModel.find({ userId })
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .lean();
+
+        // Get user's products (if seller)
+        const products = user.role === 'seller' 
+            ? await ProductModel.find({ sellerId: userId })
+                .populate('categoryId', 'name')
+                .sort({ createdAt: -1 })
+                .limit(10)
+                .lean()
+            : [];
+
+        // Get user's wishlist
+        const wishlist = await WishlistModel.findOne({ userId })
+            .populate('items.productId', 'title price images')
+            .lean();
+
+        // Get user's cart
+        const cart = await CartModel.findOne({ userId })
+            .populate('items.productId', 'title price images')
+            .lean();
+
+        // Calculate statistics
+        const totalOrders = await OrderModel.countDocuments({ userId });
+        const totalSpent = await OrderModel.aggregate([
+            { $match: { userId: user._id } },
+            { $group: { _id: null, total: { $sum: '$total' } } }
+        ]);
+
+        const totalProducts = user.role === 'seller' 
+            ? await ProductModel.countDocuments({ sellerId: userId })
+            : 0;
+
+        const totalRevenue = user.role === 'seller'
+            ? await OrderModel.aggregate([
+                { $unwind: '$items' },
+                { $match: { 'items.sellerId': user._id } },
+                { $group: { _id: null, total: { $sum: { $multiply: ['$items.price', '$items.quantity'] } } } }
+            ])
+            : [];
+
+        return {
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                username: user.username,
+                role: user.role,
+                isApproved: user.isApproved,
+                imageUrl: user.imageUrl,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+            },
+            statistics: {
+                totalOrders,
+                totalSpent: totalSpent[0]?.total || 0,
+                totalProducts,
+                totalRevenue: totalRevenue[0]?.total || 0,
+                wishlistItems: wishlist?.items?.length || 0,
+                cartItems: cart?.items?.length || 0,
+            },
+            recentOrders: orders,
+            recentProducts: products,
+            wishlist: wishlist?.items || [],
+            cart: cart?.items || [],
+        };
     }
 
 
