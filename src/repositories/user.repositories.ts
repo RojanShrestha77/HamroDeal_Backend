@@ -1,3 +1,4 @@
+import { QueryFilter } from "mongoose";
 import { IUser, UserModel } from "../models/user.model";
 
 export interface IUserREpository {
@@ -7,7 +8,7 @@ export interface IUserREpository {
     getUserByUsername(username: string): Promise<IUser | null>;
 
     getUserByID(userId: string): Promise<IUser | null>;
-    getAllUsers(): Promise<IUser []>;
+    getAllUsers({page, size, search}:{page: number; size: number; search?: string;}): Promise<{users: IUser[], total: number}>;
     updateUser(userId: string, updateData: Partial<IUser>): Promise<IUser| null>;
     deleteUser(userId: string): Promise<boolean |null>;
 
@@ -31,12 +32,31 @@ export class UserRepository implements IUserREpository {
 
     }
     async getUserByID(userId: string): Promise<IUser | null> {
-        const user = await UserModel.findById (userId);
+        const user = await UserModel.findById(userId).select('-password');
         return user;
     }
-    async getAllUsers(): Promise<IUser[]> {
-        const users = await UserModel.find();
-        return users;
+
+    async getAllUsers({page, size, search}:{page: number; size: number; search?: string;}): Promise<{users: IUser[], total: number}> {
+        let filter: QueryFilter<IUser> = {};
+        if(search) {
+            filter = {
+                $or: [
+                   {firstName: {$regex: search, $options: 'i'}},  
+                {lastName: {$regex: search, $options: 'i'}},  
+                {email: {$regex: search, $options: 'i'}},     
+                {username: {$regex: search, $options: 'i'}} 
+                ]
+            };
+        }
+        const [users, total] = await Promise.all([
+            UserModel.find(filter)
+            .skip((page -1)*size)
+            .limit(size)
+            .select('-password'),
+            UserModel.countDocuments(filter)
+
+        ]);
+        return {users, total};
     }
     async updateUser(userId: string, updateData: Partial<IUser>): Promise<IUser| null>{
         const updatedUser =  await UserModel.findByIdAndUpdate(userId, updateData, {new: true});

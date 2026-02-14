@@ -5,6 +5,12 @@ import z from "zod";
 
 const adminUserService = new AdminUserService();
 
+interface QueryParams {
+   page?: string;
+   size?: string;
+   search?: string;
+}
+
 // Converts string | string[] | undefined -> string | undefined
 const asString = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 
@@ -63,11 +69,15 @@ export class AdminUserController {
 
   async getAllUser(req: Request, res: Response) {
     try {
-      const user = await adminUserService.getAllUsers();
+      const {page, size, search}: QueryParams = req.query;
+      const {users, pagination} = await adminUserService.getAllUsers(
+        {page, size, search}
+      );
       return res.status(200).json({
         success: true,
         message: "All Users Successfully fetched",
-        data: user,
+        data: users,
+        pagination,
       });
     } catch (error: any) {
       return res.status(error.statusCode || 500).json({
