@@ -11,14 +11,14 @@ import { CartModel } from "../../models/cart.model";
 let userRepository = new UserRepository;
 
 export class AdminUserService {
-    async createUser(userData: CreateUserDto){
+    async createUser(userData: CreateUserDto) {
         const checkEmail = await userRepository.getUserByEmail(userData.email);
-        if(checkEmail){
+        if (checkEmail) {
             throw new HttpError(409, "Email already exist");
         }
 
         const checkUsername = await userRepository.getUserByUsername(userData.username);
-        if(checkUsername){
+        if (checkUsername) {
             throw new HttpError(404, 'user already exist');
 
 
@@ -31,57 +31,63 @@ export class AdminUserService {
 
     }
 
-    async getAllUsers({page, size, search}: {page?: string, size?: string, search?: string}){
-        const currentPage = page? parseInt(page): 1;
-        const pageSize = size? parseInt(size): 10;
+    async getAllUsers({ page, size, search }: { page?: string, size?: string, search?: string }) {
+        const currentPage = page ? parseInt(page) : 1;
+        const pageSize = size ? parseInt(size) : 10;
         const currentSearch = search || '';
 
-        const {users, total} = await userRepository.getAllUsers(
-            {page: currentPage, size: pageSize, search: currentSearch}
+        console.log('🔍 SERVICE - getAllUsers received:', { page, size, search });
+        console.log('🔍 SERVICE - Parsed values:', { currentPage, pageSize, currentSearch });
+
+        const { users, total } = await userRepository.getAllUsers(
+            { page: currentPage, size: pageSize, search: currentSearch }
         );
         const pagination = {
             page: currentPage,
             size: pageSize,
             total,
-            totalPages: Math.ceil(total/pageSize)
+            totalPages: Math.ceil(total / pageSize)
         }
-        return {users, pagination};
+
+        console.log('🔍 SERVICE - Returning pagination:', pagination);
+
+        return { users, pagination };
     }
 
-    async getOneUser( userId: string){
+    async getOneUser(userId: string) {
         const user = await userRepository.getUserByID(userId);
-        if(!user){
+        if (!user) {
             throw new HttpError(404, "User not found")
         }
         return user;
     }
 
-    async deleteOneUser(userId: string){
+    async deleteOneUser(userId: string) {
         const user = await userRepository.getUserByID(userId);
-        if(!user){
+        if (!user) {
             throw new HttpError(404, "user not found");
         }
         const result = await userRepository.deleteUser(userId);
-        if(!result){
+        if (!result) {
             throw new HttpError(500, "Failed to delete user");
         }
         return result;
     }
 
-    async updateOneUser(userId: string, updateData: UpdateUserDto){
+    async updateOneUser(userId: string, updateData: UpdateUserDto) {
         const user = await userRepository.getUserByID(userId);
-        if(!user){
+        if (!user) {
             throw new HttpError(404, "User not Found");
         }
         const updatedUser = await userRepository.updateUser(userId, updateData);
-        if(!updatedUser){
+        if (!updatedUser) {
             throw new HttpError(500, "Failed to update the user");
 
         }
         return updatedUser;
     }
 
-    async approvedSeller(userId: string){        
+    async approvedSeller(userId: string) {
         const user = await userRepository.getUserByID(userId);
         if (!user) {
             throw new HttpError(404, "User not found");
@@ -97,8 +103,8 @@ export class AdminUserService {
 
         const approveSeller = await userRepository.updateUser(userId, {
             isApproved: true   // ← Hardcoded here, in the service
-        } as Partial<IUser> );
-        if(!approveSeller){
+        } as Partial<IUser>);
+        if (!approveSeller) {
             throw new HttpError(500, "Failed to approve User");
         }
         return approveSeller;
@@ -123,7 +129,7 @@ export class AdminUserService {
             .lean();
 
         // Get user's products (if seller)
-        const products = user.role === 'seller' 
+        const products = user.role === 'seller'
             ? await ProductModel.find({ sellerId: userId })
                 .populate('categoryId', 'name')
                 .sort({ createdAt: -1 })
@@ -148,7 +154,7 @@ export class AdminUserService {
             { $group: { _id: null, total: { $sum: '$total' } } }
         ]);
 
-        const totalProducts = user.role === 'seller' 
+        const totalProducts = user.role === 'seller'
             ? await ProductModel.countDocuments({ sellerId: userId })
             : 0;
 

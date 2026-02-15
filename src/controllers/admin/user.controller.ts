@@ -6,9 +6,9 @@ import z from "zod";
 const adminUserService = new AdminUserService();
 
 interface QueryParams {
-   page?: string;
-   size?: string;
-   search?: string;
+  page?: string;
+  size?: string;
+  search?: string;
 }
 
 // Converts string | string[] | undefined -> string | undefined
@@ -69,10 +69,16 @@ export class AdminUserController {
 
   async getAllUser(req: Request, res: Response) {
     try {
-      const {page, size, search}: QueryParams = req.query;
-      const {users, pagination} = await adminUserService.getAllUsers(
-        {page, size, search}
+      const { page, size, search }: QueryParams = req.query;
+
+      console.log('🔍 CONTROLLER - Received query params:', { page, size, search });
+
+      const { users, pagination } = await adminUserService.getAllUsers(
+        { page, size, search }
       );
+
+      console.log('🔍 CONTROLLER - Sending response with pagination:', pagination);
+
       return res.status(200).json({
         success: true,
         message: "All Users Successfully fetched",
@@ -167,27 +173,27 @@ export class AdminUserController {
 
   async getUserDetailPage(req: Request, res: Response) {
     try {
-        const userId = asString(req.params.id);
-        if (!userId) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "User id is required" 
-            });
-        }
+      const userId = asString(req.params.id);
+      if (!userId) {
+        return res.status(400).json({
+          success: false,
+          message: "User id is required"
+        });
+      }
 
-        const userDetails = await adminUserService.getUserDetailPage(userId);
-        
-        return res.status(200).json({
-            success: true,
-            message: "User details successfully fetched",
-            data: userDetails,
-        });
+      const userDetails = await adminUserService.getUserDetailPage(userId);
+
+      return res.status(200).json({
+        success: true,
+        message: "User details successfully fetched",
+        data: userDetails,
+      });
     } catch (error: any) {
-        return res.status(error.statusCode || 500).json({
-            success: false,
-            message: error.message || "Internal Server Error",
-        });
+      return res.status(error.statusCode || 500).json({
+        success: false,
+        message: error.message || "Internal Server Error",
+      });
     }
-}
+  }
 
 }

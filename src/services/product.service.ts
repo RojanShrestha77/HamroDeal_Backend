@@ -101,8 +101,12 @@ export class ProductUserService {
       throw new HttpError(404, "Product does not exist");
     }
 
+    const productSellerId = typeof product.sellerId === 'object'
+      ? product.sellerId._id.toString()
+      : (product.sellerId as any).toString();
+
     //   check ownership
-    if (product.sellerId.toString() !== user._id.toString()) {
+    if (productSellerId !== user._id.toString()) {
       throw new HttpError(403, "You can only delete your own products");
     }
 
