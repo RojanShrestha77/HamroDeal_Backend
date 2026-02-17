@@ -110,24 +110,29 @@ export class OrderService {
         }
     }
 
-    async cancelorder(id: string, userId: string) {
-        const order = await orderRepo.findById(id);
+   async cancelorder(id: string, userId: string) {
+    const order = await orderRepo.findById(id);
 
-        if (!order) {
-            throw new HttpError(404, "Order not found");
-        }
-
-        if (order.userId.toString() !== userId) {
-            throw new HttpError(403, "You are not authorized to cancel this order");
-        }
-
-        if (order.status !== "pending" && order.status !== "processing") {
-            throw new HttpError(400, "Cannot cancel order in teh current status")
-        }
-
-        const updated = await orderRepo.updateStatus(id, "cancelled");
-        return updated;
+    if (!order) {
+        throw new HttpError(404, "Order not found");
     }
+
+    // Fix: Handle both populated and non-populated userId
+    const orderUserId = typeof order.userId === 'object' && order.userId._id 
+        ? order.userId._id.toString() 
+        : order.userId.toString();
+
+    if (orderUserId !== userId) {
+        throw new HttpError(403, "You are not authorized to cancel this order");
+    }
+
+    if (order.status !== "pending" && order.status !== "processing") {
+        throw new HttpError(400, "Cannot cancel order in the current status")
+    }
+
+    const updated = await orderRepo.updateStatus(id, "cancelled");
+    return updated;
+}
 
     async deleteOrder(id: string) {
         const order = await orderRepo.findById(id);
