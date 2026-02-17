@@ -1,30 +1,23 @@
 import { Router } from "express";
 import { ProductUserController } from "../controllers/product.controller";
 import { uploads } from "../middlewares/upload.middleware";
-import { authorizedMiddleware } from "../middlewares/authorized.middleware";
+import { authorizedMiddleware, sellerOrAdminMiddleware } from "../middlewares/authorized.middleware";
 
 const router = Router();
 const productController = new ProductUserController();
 
-// ============================================
-// PUBLIC ROUTES (anyone can access)
-// ============================================
+// =================== public routes =========================
 router.get("/", productController.getAllProducts);
 router.get("/search", productController.searchProducts);
 router.get("/category", productController.getProductByCategory);
 
-// ============================================
-// PROTECTED ROUTES (require authentication)
-// ============================================
-router.get("/my-products", authorizedMiddleware, productController.getMyProducts);
-router.post("/", authorizedMiddleware, uploads.single('images'), productController.createProduct);
-router.put("/:id", authorizedMiddleware, uploads.single('images'), productController.updateProduct);
-router.delete("/:id", authorizedMiddleware, productController.deleteProduct);
+// =================== seller or admin =========================
+router.get("/my-products", authorizedMiddleware,sellerOrAdminMiddleware, productController.getMyProducts);
+router.post("/", authorizedMiddleware,sellerOrAdminMiddleware, uploads.single('images'), productController.createProduct);
+router.put("/:id", authorizedMiddleware,sellerOrAdminMiddleware, uploads.single('images'), productController.updateProduct);
+router.delete("/:id", authorizedMiddleware,sellerOrAdminMiddleware, productController.deleteProduct);
 
-// ============================================
-// DYNAMIC ROUTE - MUST BE LAST
-// Public: anyone can view a product
-// ============================================
+// =================== dynamic routes =========================
 router.get("/:id", productController.getOneProduct);
 
 export default router;

@@ -84,3 +84,31 @@ export const approvedSellerMiddleware = (req: Request, res: Response, next: Next
 }
 
         
+export const sellerOrAdminMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    try {
+        if (!req.user) {
+            throw new HttpError(401, "Unauthorized: No user info");
+        }
+
+        // Allow admins OR approved sellers
+        if (req.user.role === "admin") {
+            return next(); // Admins can always access
+        }
+
+        if (req.user.role === "seller") {
+            if (!req.user.isApproved) {
+                throw new HttpError(403, "Your seller account is pending approval");
+            }
+            return next(); // Approved sellers can access
+        }
+
+        // Neither admin nor seller
+        throw new HttpError(403, "Forbidden: Seller or Admin access required");
+
+    } catch (error: Error | any) {
+        return res.status(error.statusCode || 500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
