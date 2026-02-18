@@ -8,8 +8,8 @@ export class OrderController {
         try {
             const parsedData = CreateOrderDto.safeParse(req.body);
 
-            if(!parsedData.success) {
-                return res.status(400).json ({
+            if (!parsedData.success) {
+                return res.status(400).json({
                     success: false,
                     message: "validation failed",
                     errors: parsedData.error
@@ -37,7 +37,7 @@ export class OrderController {
         }
     }
 
-    async getOrderById(req: Request<{id: string}>, res: Response) {
+    async getOrderById(req: Request<{ id: string }>, res: Response) {
         try {
             const orderId = req.params.id;
             const order = await orderService.getOrderById(orderId);
@@ -47,7 +47,7 @@ export class OrderController {
                 data: order,
                 message: "Order fetched successfully"
             });
-        }catch (err: any) {
+        } catch (err: any) {
             return res.status(err.statusCode || 500).json({
                 success: false,
                 message: err.message || "Internal Server Error"
@@ -60,7 +60,7 @@ export class OrderController {
         try {
             const parsedQuery = OrderQueryDto.safeParse(req.query);
 
-            if(!parsedQuery.success){
+            if (!parsedQuery.success) {
                 return res.status(400).json({
                     success: false,
                     message: "Invalid query parameters",
@@ -69,12 +69,12 @@ export class OrderController {
             }
 
             const userId = req.user?._id;
-            const {page, size} = parsedQuery.data;
+            const { page, size } = parsedQuery.data;
 
-            const currentPage = page? parseInt(page) : 1;
-            const pageSize = size? parseInt(size) : 10;
-            
-            const {orders, pagination} = await orderService.getUserorders(
+            const currentPage = page ? parseInt(page) : 1;
+            const pageSize = size ? parseInt(size) : 10;
+
+            const { orders, pagination } = await orderService.getUserorders(
                 userId!.toString(),
                 currentPage,
                 pageSize
@@ -94,7 +94,7 @@ export class OrderController {
 
         }
 
-    
+
     }
     async getSellerOrders(req: Request, res: Response) {
         try {
@@ -109,12 +109,12 @@ export class OrderController {
             }
 
             const sellerId = req.user?._id;
-            const { page, size} = parsedQuery.data;
+            const { page, size } = parsedQuery.data;
 
-            const currentPage = page? parseInt(page): 1;
-            const pageSize = size? parseInt(size) : 10;
+            const currentPage = page ? parseInt(page) : 1;
+            const pageSize = size ? parseInt(size) : 10;
 
-            const {orders, pagination} = await orderService.getSellerOrders(
+            const { orders, pagination } = await orderService.getSellerOrders(
                 sellerId!.toString(),
                 currentPage,
                 pageSize,
@@ -136,7 +136,7 @@ export class OrderController {
         }
     }
 
-    async getAllOrders(req: Request , res: Response) {
+    async getAllOrders(req: Request, res: Response) {
         try {
             const parsedQuery = OrderQueryDto.safeParse(req.query);
 
@@ -148,12 +148,12 @@ export class OrderController {
                 });
             }
 
-            const { page, size, status } =  parsedQuery.data;
+            const { page, size, status } = parsedQuery.data;
 
-            const currentPage = page? parseInt(page): 1;
-            const pageSize = size? parseInt(size): 10;
+            const currentPage = page ? parseInt(page) : 1;
+            const pageSize = size ? parseInt(size) : 10;
 
-            const {orders, pagination} = await orderService.getAllOrders(
+            const { orders, pagination } = await orderService.getAllOrders(
                 currentPage,
                 pageSize,
                 status,
@@ -168,7 +168,7 @@ export class OrderController {
             });
 
 
-        }catch (err: any) {
+        } catch (err: any) {
             return res.status(err.statusCode || 500).json({
                 success: false,
                 message: err.message || "Internal Server Error"
@@ -176,9 +176,9 @@ export class OrderController {
         }
     }
 
-    async updateOrderStatus(req: Request<{id: string}>, res: Response) {
+    async updateOrderStatus(req: Request<{ id: string }>, res: Response) {
         try {
-            const parsedData = UpdateOrderStatusDto.safeParse(req.query);
+            const parsedData = UpdateOrderStatusDto.safeParse(req.body);
 
             if (!parsedData.success) {
                 return res.status(400).json({
@@ -189,7 +189,7 @@ export class OrderController {
             }
 
             const orderId = req.params.id;
-            const {status} = parsedData.data;
+            const { status } = parsedData.data;
             const userId = req.user?._id;
             const userRole = req.user?.role;
 
@@ -208,7 +208,7 @@ export class OrderController {
 
 
 
-        }catch (err: any) {
+        } catch (err: any) {
             return res.status(err.statusCode || 500).json({
                 success: false,
                 message: err.message || "Internal Server Error"
@@ -217,19 +217,19 @@ export class OrderController {
 
     }
 
-    async cancelOrder(req: Request<{id: string}>, res: Response) {
+    async cancelOrder(req: Request<{ id: string }>, res: Response) {
         try {
             const orderId = req.params.id;
             const userId = req.user?._id;
 
             const order = await orderService.cancelorder(orderId, userId!.toString());
 
-             return res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 data: order,
                 message: "Order cancelled successfully"
             });
-        }catch (err: any) {
+        } catch (err: any) {
             return res.status(err.statusCode || 500).json({
                 success: false,
                 message: err.message || "Internal Server Error"
@@ -238,7 +238,7 @@ export class OrderController {
 
     }
 
-    async deleteOrder(req: Request<{id: string}>, res: Response) {
+    async deleteOrder(req: Request<{ id: string }>, res: Response) {
         try {
             const orderId = req.params.id;
             await orderService.deleteOrder(orderId);
@@ -247,7 +247,7 @@ export class OrderController {
                 success: true,
                 message: "Order deleted successfully"
             });
-        }catch (err: any) {
+        } catch (err: any) {
             return res.status(err.statusCode || 500).json({
                 success: false,
                 message: err.message || "Internal Server Error"
