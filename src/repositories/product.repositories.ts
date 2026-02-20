@@ -83,6 +83,61 @@ export class ProductRepository implements IProductRepository {
 
     }
 
+    async getAllProductsWithFilters(filters: {
+        categoryId?: string;
+        search?: string;
+        minPrice?: number;
+        maxPrice?: number;
+        sort?: string;
+    }) : Promise<IProduct[]> {
+        const query: any = {};
+
+        // category fiktler
+        if(filters.categoryId) {
+            query.catgeoryId = filters.categoryId;
+        }
+
+        // search filter
+        if(filters.search && filters.search.trim()) {
+            const regex = new RegExp(filters.search.trim(),"i");
+            query.$or = [
+                {title: regex},
+                {description: regex}
+            
+            ];
+        }
+
+        // price filter
+        if(filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+            query.price = {};
+            if(filters.minPrice !== undefined)query.price.$gte = filters.minPrice;
+            if(filters.maxPrice  !== undefined) query.price.$lte = filters.maxPrice;
+        }
+
+        // build query
+        let productQuery = ProductModel.find(query).populate('categoryId', 'name description').populate('sellerId', 'username email');
+
+        // sort
+        if(filters.sort) {
+            switch(filters.sort) {
+                case 'price_asc':
+                    productQuery = productQuery.sort({price: 1});
+                    break;
+                case 'price_desc':
+                    productQuery = productQuery.sort({price: -1});
+                    break;
+                case 'newest':
+                    productQuery = productQuery.sort({createdAt: -1});
+                    break;
+                default:
+                    break;
+            }
+        }
+        return await productQuery;
+
+
+    }
+
 
 
 
