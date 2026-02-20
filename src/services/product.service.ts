@@ -42,6 +42,16 @@ export class ProductUserService {
     return await productRepository.getAllProducts();
   }
 
+  async getAllProductsWithFilters(filters: {
+    categoryId?: string;
+    search?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    sort?: string; 
+  }) {
+    return await productRepository.getAllProductsWithFilters(filters);
+  }
+
   async getOneProduct(productId: string) {
     if (!isValidObjectId(productId)) {
       throw new HttpError(400, "Invalid productId");
