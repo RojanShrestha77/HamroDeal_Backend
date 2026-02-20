@@ -67,7 +67,18 @@ export class ProductUserController {
 
   async getAllProducts(req: Request, res: Response) {
     try {
-      const products = await productUserService.getAllProducts();
+      const categoryId = asString((req.query as any).categoryId);
+      const search = asString((req.query as any).q) || asString((req.query as any).search);
+      const minPrice = asString((req.query as any).minPrice);
+      const maxPrice = asString((req.query as any).maxPrice);
+      const sort = asString((req.query as any).sort);
+      const products = await productUserService.getAllProductsWithFilters({
+        categoryId,
+        search,
+        minPrice: minPrice ? Number(minPrice) : undefined,
+        maxPrice: maxPrice ? Number(maxPrice) : undefined,
+        sort,
+      });
       return res.json({
         success: true,
         message: "All Products Successfully fetched",

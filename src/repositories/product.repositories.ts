@@ -7,6 +7,13 @@ export interface IProductRepository{
     updateProduct(productId: string, updateData: Partial<IProduct>): Promise<IProduct|null> 
     deleteProduct(productId: string): Promise<boolean | null>
     getAllProducts(): Promise<IProduct[]>
+    getAllProductsWithFilters(filters: {
+      categoryId?: string;
+      search?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      sort?: string;
+    }): Promise<IProduct[]>
     getProductsByCategory(categoryId: string): Promise<IProduct[]>
     searchProducts(query: string): Promise<IProduct[]>
     getAllProductsPaginated(page: number, limit: number): Promise<IProduct[]>
@@ -94,7 +101,7 @@ export class ProductRepository implements IProductRepository {
 
         // category fiktler
         if(filters.categoryId) {
-            query.catgeoryId = filters.categoryId;
+            query.categoryId = filters.categoryId;
         }
 
         // search filter
