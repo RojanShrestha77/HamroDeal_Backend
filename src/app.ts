@@ -18,7 +18,7 @@ import blogRoutes from './routes/blog.route';
 import orderRoutes from './routes/order.routes';
 import sellerOrderRoutes from './routes/seller/order.routes';
 import adminOrderRoutes from './routes/admin/order.routes';
-
+import adminAnalyticsRoutes from './routes/admin/analytics.routes';
 dotenv.config();
 
 console.log(process.env.PORT);
@@ -54,6 +54,9 @@ app.use('/api/seller/orders', sellerOrderRoutes);
 
 // admin order routes
 app.use('/api/admin/orders', adminOrderRoutes);
+
+// analytics
+app.use('/api/admin/analytics', adminAnalyticsRoutes);
 
 
 app.use('/api/admin/blogs', adminBlogRoutes)
