@@ -69,7 +69,6 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/categories', categoryRoutes); 
 
 app.use('/api/products', productRoutes);
-// app.use('/api/products', publicProductRoutes);  //public product 
 
 
 app.use('/api/admin/users', adminUserRoutes);
