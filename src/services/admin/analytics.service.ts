@@ -170,7 +170,7 @@ export class AdminAnalyticsService {
         ]);
 
         return result.map((item) => ({
-            data: `${item._id.year}-${String(item._id.month).padStart(2, "0")}-${String(item._id.day).padStart(2, "0")}`,
+            date: `${item._id.year}-${String(item._id.month).padStart(2, "0")}-${String(item._id.day).padStart(2, "0")}`,
             revenue: item.revenue,
             orders: item.orders,
         }));
