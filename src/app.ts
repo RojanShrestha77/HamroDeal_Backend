@@ -19,6 +19,7 @@ import orderRoutes from './routes/order.routes';
 import sellerOrderRoutes from './routes/seller/order.routes';
 import adminOrderRoutes from './routes/admin/order.routes';
 import adminAnalyticsRoutes from './routes/admin/analytics.routes';
+import reviewRoutes from './routes/review.routes';
 dotenv.config();
 
 console.log(process.env.PORT);
@@ -48,6 +49,9 @@ app.use('/api/auth', authRoutes);
 
 // normal order routes(user)
 app.use('/api/orders', orderRoutes);
+
+// review
+app.use('/api/reviews', reviewRoutes);
 
 // seller order routes
 app.use('/api/seller/orders', sellerOrderRoutes);
