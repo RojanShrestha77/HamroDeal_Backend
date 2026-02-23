@@ -2,40 +2,52 @@ import { CreateReviewType, UpdateReviewType } from "../types/review.type";
 import { HttpError } from "../errors/http-error";
 import { IReview } from "../models/review.model";
 import { OrderRepository } from "../repositories/order.repository";
+import mongoose from "mongoose";
 import { ReviewRepository } from "../repositories/review.respositories";
 
 const reviewRepo = new ReviewRepository();
 const orderRepo = new OrderRepository();
 
 export class ReviewService {
-    async createReview(userId: string, productId: string, data: CreateReviewType) {
-        // Check if user has purchased this product
-        const { orders } = await orderRepo.findByUserId(userId, 1, 1000);
-        const hasPurchased = orders.some(order => 
-            order.status === "delivered" && 
-            order.items.some(item => item.productId.toString() === productId)
-        );
-
-        if (!hasPurchased) {
-            throw new HttpError(403, "You can only review products you have purchased");
+   async createReview(userId: string, productId: string, data: CreateReviewType) {
+    const orders = await orderRepo.findByUserIdUnpopulated(userId);
+    
+    
+    const hasPurchased = orders.some(order => {
+        if (order.status !== "delivered") {
+            return false;
         }
-
-        // Check if user already reviewed this product
-        const existingReview = await reviewRepo.findByUserAndProduct(userId, productId);
-        if (existingReview) {
-            throw new HttpError(400, "You have already reviewed this product");
-        }
-
-        const reviewData: Partial<IReview> = {
-            userId,
-            productId,
-            rating: data.rating,
-            comment: data.comment
-        };
-
-        const review = await reviewRepo.create(reviewData);
-        return review;
+        
+        return order.items.some(item => {
+            const itemProductId = item.productId instanceof mongoose.Types.ObjectId 
+                ? item.productId.toString() 
+                : String(item.productId);
+            
+            return itemProductId === productId;
+        });
+    });
+    
+    if (!hasPurchased) {
+        throw new HttpError(403, "You can only review products you have purchased");
     }
+
+    // Check if user already reviewed this product
+    const existingReview = await reviewRepo.findByUserAndProduct(userId, productId);
+    if (existingReview) {
+        throw new HttpError(400, "You have already reviewed this product");
+    }
+
+    const reviewData: Partial<IReview> = {
+        userId,
+        productId,
+        rating: data.rating,
+        comment: data.comment
+    };
+
+    const review = await reviewRepo.create(reviewData);
+    return review;
+}
+
 
     async getProductReviews(productId: string, page: number = 1, size: number = 10) {
         const { reviews, total } = await reviewRepo.findByProductId(productId, page, size);

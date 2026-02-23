@@ -6,6 +6,8 @@ export interface IOrderRepository {
     findById(id: string): Promise<IOrder | null>;
     findByUserId(userId: string, page: number, size: number): Promise<{ orders: IOrder[], total: number }>;
     findBySellerId(sellerId: string, page: number, size: number): Promise<{ orders: IOrder[], total: number }>;
+        findByUserIdUnpopulated(userId: string): Promise<IOrder[]>; // ← Add this
+
     findAll(page: number, size: number, status?: string): Promise<{ orders: IOrder[], total: number }>;
     updateStatus(id: string, status: string): Promise<IOrder | null>;
     delete(id: string): Promise<boolean>;
@@ -14,6 +16,11 @@ export interface IOrderRepository {
 }
 
 export class OrderRepository implements IOrderRepository {
+    async findByUserIdUnpopulated(userId: string): Promise<IOrder[]> {
+        const orders = await OrderModel.find({ userId })
+            .sort({ createdAt: -1 })
+            .lean(); // Use lean() for better performance
+        return orders;    }
     async findAll(page: number, size: number, status?: string): Promise<{ orders: IOrder[]; total: number; }> {
         const filter = status ? { status } : {}
         const [orders, total] = await Promise.all([
