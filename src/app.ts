@@ -20,6 +20,7 @@ import sellerOrderRoutes from './routes/seller/order.routes';
 import adminOrderRoutes from './routes/admin/order.routes';
 import adminAnalyticsRoutes from './routes/admin/analytics.routes';
 import reviewRoutes from './routes/review.routes';
+import notificationRoutes from './routes/notification.routes';
 dotenv.config();
 
 console.log(process.env.PORT);
@@ -47,6 +48,8 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use('/api/auth', authRoutes);
 
+// notification
+app.use("/api/notifications", notificationRoutes);
 // normal order routes(user)
 app.use('/api/orders', orderRoutes);
 
