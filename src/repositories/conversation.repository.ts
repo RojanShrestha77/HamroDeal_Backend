@@ -85,7 +85,7 @@ export class ConversationRepository implements IConversationRepository {
     async resetUnreadCount(id: string, userId: string): Promise<IConversation | null> {
         return await ConversationModel.findByIdAndUpdate(
             id,
-            {[`unreadCount.${userId}`]: 0},
+            { $set: { [`unreadCount.${userId}`]: 0 } },
             { new: true}
         )
         .populate('participants', 'firstName lastName email imageUrl')

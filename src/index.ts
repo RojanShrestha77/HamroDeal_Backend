@@ -1,12 +1,14 @@
-import app from "./app";
+import  { httpServer } from "./app";
 import { PORT } from "./configs";
 import { connectDB } from "./database/mongodb";
 
 async function startServer(){
     await connectDB();
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
         console.log(`server: http://localhost:${PORT}`);
-    })
+        console.log(`Socket.IO: ws://localhost:${PORT}`);
+
+    });
 
 }
 

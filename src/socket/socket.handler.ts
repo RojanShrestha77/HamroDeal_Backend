@@ -18,7 +18,7 @@ export const setupSocketHandlers = (io: Server) => {
             return;
         }
 
-        console.log('User connected: ${userId}');
+        console.log(`User connected: ${userId}`);
 
         // add user to onlien users
         onlineUsers.set(userId, socket.id);

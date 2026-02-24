@@ -57,7 +57,7 @@ export class MessageRepository implements IMessageRepository {
         })
         .populate('senderId', 'firstName lastName email imageUrl')
         .populate('receiverId', 'firstName lastName email imageUrl')
-        .sort({ creadtedAt: -1})
+        .sort({ createdAt: -1})
         .skip(skip)
         .limit(size)
         .exec();

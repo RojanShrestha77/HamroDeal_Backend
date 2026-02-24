@@ -17,7 +17,7 @@ export const socketAuthMiddleware = async (
     try {
         const token = socket.handshake.auth.token || socket.handshake.headers.authorization?.split(' ')[1];
 
-        if(token) {
+        if(!token) {
             return next(new Error("Authentication error: NO token provided"));
         }
 

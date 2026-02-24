@@ -21,11 +21,38 @@ import reviewRoutes from './routes/review.routes';
 import notificationRoutes from './routes/notification.routes';
 import conversationRoutes from './routes/conversation.routes';
 import messageRoutes from './routes/message.routes';
+import { socketAuthMiddleware } from './middlewares/socket.middleware';
+import { setupSocketHandlers } from './socket/socket.handler';
+import { createServer,  } from 'http';
+import { Server } from 'socket.io';
 dotenv.config();
 
 console.log(process.env.PORT);
 
 const app = express();
+
+
+// creating http server
+const httpServer = createServer(app);
+
+// intialize socket.io
+const io = new Server(httpServer, {
+    cors: {
+        origin: ["http://localhost:3000", "http://localhost:3003"],
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
+
+// Socket.IO authentication middleware
+io.use(socketAuthMiddleware);
+
+// Setup socket event handlers
+setupSocketHandlers(io);
+
+// Make io accessible in routes if needed
+app.set('io', io);
+
 
 // connectin the frontend  to the backend
 // decide the list of the accepted domain
@@ -99,4 +126,5 @@ app.use((err: Error, req: Request, res: Response, next: Function) => {
     return res.status(500).json({ success: false, message: err.message || "Internal Server Error" });
 });
 
+export { httpServer, io};
 export default app;
