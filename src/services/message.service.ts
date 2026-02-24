@@ -61,4 +61,76 @@ export class MessageService {
 
         
     }
+
+    async getMessages(conversationId: string, userId: string, page: number = 1, size: number = 50 ) {
+        // Validate IDs
+    if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+      throw new HttpError(400, 'Invalid conversation ID');
+    }
+
+    // Get conversation
+    const conversation = await conversationRepo.findById(conversationId);
+    if (!conversation) {
+      throw new HttpError(404, 'Conversation not found');
+    }
+
+    // Verify user is a participant
+    const isParticipant = conversation.participants.some(
+      (p) => p.toString() === userId
+    );
+    if (!isParticipant) {
+      throw new HttpError(403, 'Access denied');
+    }
+
+    // Get messages
+    const { messages, total } = await messageRepo.findByConversationId(conversationId, page, size);
+
+    // Mark messages as read (where user is receiver)
+    await messageRepo.markAsRead(conversationId, userId);
+
+    // Reset unread count for this user
+    await conversationRepo.resetUnreadCount(conversationId, userId);
+
+    return {
+      messages,
+      total,
+      page,
+      size,
+      totalPages: Math.ceil(total / size),
+    };
+  }
+
+  async deleteMessage(messageId: string, userId: string): Promise<void> {
+    if (!mongoose.Types.ObjectId.isValid(messageId)) {
+      throw new HttpError(400, 'Invalid message ID');
+    }
+
+    const message = await messageRepo.findById(messageId);
+    if (!message) {
+      throw new HttpError(404, 'Message not found');
+    }
+
+    if (message.senderId.toString() !== userId) {
+      throw new HttpError(403, 'Access denied');
+    }
+
+    await messageRepo.delete(messageId);
+  }
+
+  async markAsDelivered(conversationId: string, userId: string): Promise<void> {
+    if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+      throw new HttpError(400, 'Invalid conversation ID');
+    }
+
+    await messageRepo.markAsDelivered(conversationId, userId);
+  }
+
+  async markAsRead(conversationId: string, userId: string): Promise<void> {
+    if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+      throw new HttpError(400, 'Invalid conversation ID');
+    }
+
+    await messageRepo.markAsRead(conversationId, userId);
+    await conversationRepo.resetUnreadCount(conversationId, userId);
+  }
 }

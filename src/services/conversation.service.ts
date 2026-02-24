@@ -11,7 +11,7 @@ export class ConversationService {
             throw new HttpError(400, 'Invalid user ID');
         }
 
-        if(userId === otherUserId) {
+        if (userId === otherUserId) {
             throw new HttpError(400, 'Cannot create convesation with yourself');
         }
 
@@ -26,12 +26,12 @@ export class ConversationService {
     }
 
     async getConversationById(conversationId: string, userId: string): Promise<IConversation> {
-        if(!mongoose.Types.ObjectId.isValid(conversationId)) {
+        if (!mongoose.Types.ObjectId.isValid(conversationId)) {
             throw new HttpError(400, 'Invalid conversation ID');
         }
 
         const conversation = await conversationRepo.findById(conversationId);
-        if(!conversation) {
+        if (!conversation) {
             throw new HttpError(404, 'Conversation not found');
         }
 
@@ -39,7 +39,7 @@ export class ConversationService {
         const isParticipant = conversation.participants.some(
             (p) => p.toString() === userId
         );
-        if(!isParticipant) {
+        if (!isParticipant) {
             throw new HttpError(403, 'Access denied');
         }
 
@@ -47,11 +47,11 @@ export class ConversationService {
     }
 
     async getUserConversations(userId: string, page: number = 1, size: number = 20) {
-        if(!mongoose.Types.ObjectId.isValid(userId)) {
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
             throw new HttpError(400, 'Invalid user ID');
         }
 
-        const { conversations, total} = await conversationRepo.findByUserId(userId, page, size);
+        const { conversations, total } = await conversationRepo.findByUserId(userId, page, size);
 
         const formattedConversations = conversations.map((conv) => {
             const otherUser = conv.participants.find(
@@ -73,7 +73,50 @@ export class ConversationService {
             total,
             page,
             size,
-            totalPages: Math.ceil(total/ size),
+            totalPages: Math.ceil(total / size),
         };
+    }
+
+    async deleteConversation(conversationId: string, userId: string): Promise<void> {
+        if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+            throw new HttpError(400, 'Invalid conversation ID')
+        }
+
+        const conversation = await conversationRepo.findById(conversationId);
+
+        if (!conversation) {
+            throw new HttpError(404, 'Conversation not found');
+        }
+
+        const isParticipant = conversation.participants.some(
+            (p) => p.toString() === userId
+        );
+        if (!isParticipant) {
+            throw new HttpError(403, 'Access denied');
+        }
+
+        await conversationRepo.delete(conversationId);
+    }
+
+    async resetUnreadCount(conversationId: string, userId: string): Promise<void> {
+        if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+            throw new HttpError(400, 'Invalid conversation ID');
+        }
+
+        const conversation = await conversationRepo.findById(conversationId);
+
+        if (!conversation) {
+            throw new HttpError(404, 'Conversation not found');
+        }
+
+        const isParticipant = conversation.participants.some(
+            (p) => p.toString() === userId
+        );
+        if (!isParticipant) {
+            throw new HttpError(403, 'Access denied');
+        }
+
+        await conversationRepo.resetUnreadCount(conversationId, userId);
+
     }
 }
