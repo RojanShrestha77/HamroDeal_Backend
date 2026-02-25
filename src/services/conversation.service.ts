@@ -25,26 +25,40 @@ export class ConversationService {
         return conversation;
     }
 
-    async getConversationById(conversationId: string, userId: string): Promise<IConversation> {
-        if (!mongoose.Types.ObjectId.isValid(conversationId)) {
-            throw new HttpError(400, 'Invalid conversation ID');
-        }
-
-        const conversation = await conversationRepo.findById(conversationId);
-        if (!conversation) {
-            throw new HttpError(404, 'Conversation not found');
-        }
-
-        // verify user is participant
-        const isParticipant = conversation.participants.some(
-            (p) => p.toString() === userId
-        );
-        if (!isParticipant) {
-            throw new HttpError(403, 'Access denied');
-        }
-
-        return conversation;
+    async getConversationById(conversationId: string, userId: string): Promise<any> {
+    if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+        throw new HttpError(400, 'Invalid conversation ID');
     }
+
+    const conversation = await conversationRepo.findById(conversationId);
+    if (!conversation) {
+        throw new HttpError(404, 'Conversation not found');
+    }
+
+    // verify user is participant
+    const isParticipant = conversation.participants.some(
+        (p: any) => (p._id ? p._id.toString() : p.toString()) === userId
+    );
+    if (!isParticipant) {
+        throw new HttpError(403, 'Access denied');
+    }
+
+    // Format response to match getUserConversations format
+    const otherUser = conversation.participants.find(
+        (p: any) => (p._id ? p._id.toString() : p.toString()) !== userId
+    );
+
+    return {
+        _id: conversation._id,
+        otherUser: otherUser,
+        lastMessage: conversation.lastMessage,
+        unreadCount: conversation.unreadCount.get(userId) || 0,
+        createdAt: conversation.createdAt,
+        updatedAt: conversation.updatedAt,
+    };
+    }
+ 
+
 
     async getUserConversations(userId: string, page: number = 1, size: number = 20) {
         if (!mongoose.Types.ObjectId.isValid(userId)) {

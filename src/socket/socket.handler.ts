@@ -31,50 +31,52 @@ export const setupSocketHandlers = (io: Server) => {
 
         // handle send message
         socket.on("send_message", async (data, callback) => {
-            try {
-                const {conversationId, text}= data;
+    try {
+        const {conversationId, text} = data;
 
-                // save mess to database
-                const message = await messageService.sendMessage(userId, {
-                    conversationId,
-                    text,
-                });
-
-                // get conversation to find recxevier
-                const conversation = await conversationService.getConversationById(
-                    conversationId,
-                    userId
-                );
-
-                const receiverId = conversation.participants.find((p: any) => p.toString() !== userId)?.toString();
-
-                if(receiverId) {
-                    // send message to receiver if online
-                    io.to(receiverId).emit("new_message", message);
-
-                    // mark as deliuverd if receiver is onlin
-                    if(onlineUsers.has(receiverId)) {
-                        await messageService.markAsDelivered(conversationId, receiverId);
-
-                        // notifiy sender that mess wa deliverd
-                        socket.emit("message_delivered", {
-                            messageId: message._id,
-                            conversationId,
-                        });
-                    }
-                }
-
-                // send confimatio ot sender
-                if(callback) {
-                    callback({ success: true, message});
-                }
-            } catch (error: any) {
-                console.error("Error sending message", error);
-                if(callback) {
-                    callback({ success: false, error: error.message});
-                }
-            }
+        // save message to database
+        const message = await messageService.sendMessage(userId, {
+            conversationId,
+            text,
         });
+
+        // get conversation to find receiver
+        const conversation = await conversationService.getConversationById(
+            conversationId,
+            userId
+        );
+
+        // Use otherUser instead of participants
+        const receiverId = conversation.otherUser?._id?.toString() || conversation.otherUser?.toString();
+
+        if(receiverId) {
+            // send message to receiver if online
+            io.to(receiverId).emit("new_message", message);
+
+            // mark as delivered if receiver is online
+            if(onlineUsers.has(receiverId)) {
+                await messageService.markAsDelivered(conversationId, receiverId);
+
+                // notify sender that message was delivered
+                socket.emit("message_delivered", {
+                    messageId: message._id,
+                    conversationId,
+                });
+            }
+        }
+
+        // send confirmation to sender
+        if(callback) {
+            callback({ success: true, message});
+        }
+    } catch (error: any) {
+        console.error("Error sending message", error);
+        if(callback) {
+            callback({ success: false, error: error.message});
+        }
+    }
+});
+
         
         // handle typin indicator
         socket.on("typing", (data) => {

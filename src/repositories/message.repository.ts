@@ -23,25 +23,28 @@ export interface IMessageRepository {
 
 export class MessageRepository implements IMessageRepository {
     async create(message: {
-        conversationId: string;
-        senderId: string;
-        receiverId: string;
-        text: string;
-        type?: "text" | "image" | "file";
-        status?: "sent" | "delivered" | "read";
-    }): Promise<IMessage> {
-        const newMessage = await MessageModel.create({            
-            conversationId: message.conversationId ? (typeof message.conversationId === 'string' ? new mongoose.Types.ObjectId(message.conversationId) : message.conversationId):undefined,
-            senderId: message.conversationId? (typeof message.conversationId === 'string'? new mongoose.Types.ObjectId(message.senderId) : message.conversationId) : undefined,
-            receiverId: message.conversationId? (typeof message.conversationId === 'string' ? new mongoose.Types.ObjectId(message.receiverId) : message.conversationId) : undefined,
-            
-        });
+    conversationId: string;
+    senderId: string;
+    receiverId: string;
+    text: string;
+    type?: "text" | "image" | "file";
+    status?: "sent" | "delivered" | "read";
+}): Promise<IMessage> {
+    const newMessage = await MessageModel.create({
+        conversationId: new mongoose.Types.ObjectId(message.conversationId),
+        senderId: new mongoose.Types.ObjectId(message.senderId),
+        receiverId: new mongoose.Types.ObjectId(message.receiverId),
+        text: message.text,
+        type: message.type || 'text',
+        status: message.status || 'sent',
+    });
 
-        return await newMessage.populate([
-            {path: 'senderId', select: 'firstName lastName email imageUrl'},
-            {path: 'receiverId', select: 'firstName lastName email imageUrl'},
-        ])
-    }
+    return await newMessage.populate([
+        { path: 'senderId', select: 'firstName lastName email imageUrl' },
+        { path: 'receiverId', select: 'firstName lastName email imageUrl' },
+    ]);
+}
+
     
     async findById(id: string): Promise<IMessage | null> {
         return await MessageModel.findById(id)
