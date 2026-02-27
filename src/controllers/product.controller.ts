@@ -211,4 +211,47 @@ export class ProductUserController {
       });
     }
   }
+
+  async getNewestProducts(req: Request, res: Response) {
+  try {
+    const limitStr = asString((req.query as any).limit) || "8";
+    const limit = parseInt(limitStr);
+    
+    const products = await productUserService.getNewestProducts(limit);
+    
+    return res.status(200).json({
+      success: true,
+      message: "Newest products fetched successfully",
+      data: products,
+    });
+  } catch (error: any) {
+    return res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+  }
+
+  async getTrendingProducts(req: Request, res: Response) {
+  try {
+    const limitStr = asString((req.query as any).limit) || "8";
+    const daysStr = asString((req.query as any).days) || "30";
+    const limit = parseInt(limitStr);
+    const days = parseInt(daysStr);
+    
+    const products = await productUserService.getTrendingProducts(limit, days);
+    
+    return res.status(200).json({
+      success: true,
+      message: "Trending products fetched successfully",
+      data: products,
+    });
+  } catch (error: any) {
+    return res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+  }
+  
 }

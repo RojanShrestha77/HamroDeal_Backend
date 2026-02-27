@@ -47,7 +47,7 @@ export class ProductUserService {
     search?: string;
     minPrice?: number;
     maxPrice?: number;
-    sort?: string; 
+    sort?: string;
   }) {
     return await productRepository.getAllProductsWithFilters(filters);
   }
@@ -74,10 +74,10 @@ export class ProductUserService {
     }
 
     //  check ownership - handle both populated and non-populated sellerId
-    const productSellerId = typeof product.sellerId === 'object' 
-      ? product.sellerId._id.toString() 
+    const productSellerId = typeof product.sellerId === 'object'
+      ? product.sellerId._id.toString()
       : (product.sellerId as any).toString();
-    
+
     if (productSellerId !== user._id.toString()) {
       throw new HttpError(403, "You can only update your own products");
     }
@@ -135,4 +135,29 @@ export class ProductUserService {
     }
     return await productRepository.getProductsByCategory(categoryId);
   }
+
+  async getNewestProducts(limit: number) {
+    if (!limit || limit <= 0) {
+      throw new HttpError(400, "Invalid limit parameter");
+    }
+
+    const products = await productRepository.getNewestProducts(limit);
+    return products;
+  }
+
+  async getTrendingProducts(limit: number, days: number) {
+    if (!limit || limit <= 0) {
+      throw new HttpError(400, "Invalid limit parameter");
+    }
+
+    if (!days || days <= 0) {
+      throw new HttpError(400, "Invalid days parameter");
+    }
+
+    const products = await productRepository.getTrendingProducts(limit, days);
+    return products;
+  }
+
+
+
 }
