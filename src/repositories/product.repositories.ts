@@ -17,9 +17,44 @@ export interface IProductRepository{
     getProductsByCategory(categoryId: string): Promise<IProduct[]>
     searchProducts(query: string): Promise<IProduct[]>
     getAllProductsPaginated(page: number, limit: number): Promise<IProduct[]>
+    getNewestProducts(limit: number): Promise<IProduct[]>              
+    getTrendingProducts(limit: number, days: number): Promise<IProduct[]>  
+
+
 }
 
 export class ProductRepository implements IProductRepository {
+    async getNewestProducts(limit: number): Promise<IProduct[]> 
+    {
+        const products = await ProductModel.find({})
+            .sort({ createdAt: -1 })
+            .limit(limit)
+            .populate('categoryId', 'name description')
+            .populate('sellerId', 'username email');
+        
+        return products;
+    }
+    async getTrendingProducts(limit: number, days: number): Promise<IProduct[]> 
+    {
+        const dateThreshold = new Date();
+        dateThreshold.setDate(dateThreshold.getDate() - days);
+        
+        const products = await ProductModel.find({
+            createdAt: { $gte: dateThreshold }
+        })
+            .sort({ 
+                soldCount: -1,
+                viewCount: -1,
+                averageRating: -1,
+                createdAt: -1
+            })
+            .limit(limit)
+            .populate('categoryId', 'name description')
+            .populate('sellerId', 'username email');
+        
+        return products;
+    }
+    
     async createProduct(productData: Partial<IProduct>): Promise<IProduct> {
         const product = new ProductModel(productData);
         await product.save();

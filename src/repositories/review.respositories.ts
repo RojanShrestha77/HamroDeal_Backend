@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { ReviewModel, IReview } from "../models/review.model";
 
 export interface IReviewRepository {
@@ -63,10 +64,11 @@ export class ReviewRepository implements IReviewRepository {
     }
 
     async getAverageRating(productId: string): Promise<number> {
-        const result = await ReviewModel.aggregate([
-            { $match: { productId: productId } },
-            { $group: { _id: null, avgRating: { $avg: "$rating" } } }
-        ]);
-        return result[0]?.avgRating || 0;
-    }
+    const result = await ReviewModel.aggregate([
+        { $match: { productId: new mongoose.Types.ObjectId(productId) } },  // Convert to ObjectId
+        { $group: { _id: null, avgRating: { $avg: "$rating" } } }
+    ]);
+    return result[0]?.avgRating || 0;
+}
+
 }

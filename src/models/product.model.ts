@@ -35,6 +35,22 @@ const ProductMongoSchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true
+    },
+    soldCount: {
+      type: Number,
+      default: 0,
+    },
+    viewCount: {
+      type: Number,
+      default: 0,
+    },
+    reviewCount: {
+      type: Number,
+      default: 0,
+    },
+    averageRating: {
+      type: Number,
+      defualt: 0,
     }
   },
   {
@@ -51,6 +67,10 @@ export interface IProduct extends  Document {
   images?: string;
   categoryId:mongoose.Types.ObjectId;
   sellerId: mongoose.Types.ObjectId;
+  soldCount: number;
+  viewCount: number;
+  reviewCount: number;
+  averageRating: number;
   createdAt: Date;
   updatedAt: Date;
 }
