@@ -11,24 +11,24 @@ export class ProductUserController {
   async createProduct(req: Request, res: Response) {
     try {
       const user = req.user as IUser;
-
       const payload = { ...req.body };
-      const file = req.file as Express.Multer.File;
 
-      if (!file) {
-        return res.status(400).json({
-          success: false,
-          message: "Product image is required",
-        });
+      if (payload.price) payload.price = parseFloat(payload.price);
+      if (payload.stock) payload.stock = parseInt(payload.stock);
+
+      const files = req.files as Express.Multer.File[];
+
+      if(files && files.length > 0) {
+        payload.images = files.map(file => `/uploads/${file.filename}`);
       }
 
-      payload.images = `/uploads/${file.filename}`;
-
       const parsedData = CreateProductDto.safeParse(payload);
+
       if (!parsedData.success) {
         return res.status(400).json({
           success: false,
-          message: z.prettifyError(parsedData.error),
+          message: "Validation failed",
+          errors: parsedData.error.issues,
         });
       }
 
@@ -116,23 +116,29 @@ export class ProductUserController {
   async updateProduct(req: Request, res: Response) {
     try {
       const user = req.user as IUser;
+      const id = req.params.id as string;
+      const payload = req.body;
 
-      const id = asString(req.params.id as any);
-      if (!id) {
-        return res.status(400).json({ success: false, message: "Product id is required" });
+      if (payload.price) payload.price = parseFloat(payload.price);
+      if (payload.stock) payload.stock = parseInt(payload.stock);
+
+      const files = req.files as Express.Multer.File[];
+      if (files && files.length > 0) {
+        payload.images = files.map(file =>  `/uploads/${file.filename}`);
       }
 
-      const parsedData = UpdateProductDto.safeParse(req.body);
+      const parsedData = UpdateProductDto.safeParse(payload);
       if (!parsedData.success) {
         return res.status(400).json({
           success: false,
-          message: z.prettifyError(parsedData.error),
+          message: "Validation failed",
+          errors: parsedData.error.issues,
         });
       }
 
       const updatedProduct = await productUserService.updateProduct(id, parsedData.data, user);
 
-      return res.json({
+      return res.status(200).json({
         success: true,
         message: "Product Updated Successfully",
         data: updatedProduct,
