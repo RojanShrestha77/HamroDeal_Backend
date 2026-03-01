@@ -25,11 +25,24 @@ export class CartService {
         return {
             _id: cart._id.toString(),
             userId: cart.userId?.toString(),
-            items: cart.items.map((item: any) => ({
-                productId: item.productId,
-                quantity: item.quantity,
-                price: item.price,
-            })),
+            items: cart.items.map((item: any) => {
+                // Check if productId is populated (object) or just an ID (string)
+                const isPopulated = typeof item.productId === 'object' && item.productId !== null;
+
+                return {
+                    productId: isPopulated ? {
+                        _id: item.productId._id.toString(),
+                        title: item.productId.title,
+                        description: item.productId.description,
+                        price: item.productId.price,
+                        stock: item.productId.stock,
+                        images: item.productId.images,
+                        sellerId: item.productId.sellerId?.toString() || item.productId.sellerId,
+                    } : item.productId.toString(),
+                    quantity: item.quantity,
+                    price: item.price,
+                };
+            }),
             total: this.calculateCartTotal(cart),
             itemCount: this.calculateItemCount(cart),
             createdAt: cart.createdAt,
@@ -43,16 +56,16 @@ export class CartService {
         user: IUser,
         cartData: AddToCartDto
     ): Promise<CartResponse> {
-        const {productId, quantity} = cartData;
+        const { productId, quantity } = cartData;
 
         const product = await productRepository.getProductById(productId);
 
-        if(!product) {
+        if (!product) {
             throw new HttpError(404, "Product not found")
         }
 
         // check if the prodcut has enough stack
-        if(product.stock < 1) {
+        if (product.stock < 1) {
             throw new HttpError(404, "Product out of stock");
         }
 
@@ -61,22 +74,22 @@ export class CartService {
 
         let currentQuantityInCart = 0;
 
-        if(existingCart){
+        if (existingCart) {
             const existingItem = existingCart.items.find(
                 (item) => item.productId.toString() === productId)
-            
-              
+
+
         }
 
         // caclulate the new total quanity
         const newTotalQuantity = currentQuantityInCart + quantity;
 
         // check if new total excceds stock
-        if(newTotalQuantity > product.stock) {
+        if (newTotalQuantity > product.stock) {
             const availableToAdd = product.stock - currentQuantityInCart;
 
-            if(availableToAdd <= 0) {
-                throw new HttpError(400, `You already have the maximum available (${product.stock}) in your cart`); 
+            if (availableToAdd <= 0) {
+                throw new HttpError(400, `You already have the maximum available (${product.stock}) in your cart`);
             }
 
             throw new HttpError(400, `Cannot add ${quantity} items. Only ${availableToAdd} more available (${product.stock} total in stock, ${currentQuantityInCart} already in cart)`);
@@ -85,7 +98,7 @@ export class CartService {
 
         // add to cart with current price(price snapshot)
         const cart = await cartRepository.addItemToCart(
-            user._id .toString(),
+            user._id.toString(),
             productId,
             quantity,
             product.price,
@@ -99,7 +112,7 @@ export class CartService {
     async getCart(user: IUser): Promise<CartResponse> {
         let cart = await cartRepository.getCartByUserId(user._id.toString());
 
-        if(!cart) {
+        if (!cart) {
             cart = await cartRepository.createCart(user._id.toString());
         }
 
@@ -110,17 +123,17 @@ export class CartService {
         user: IUser,
         productId: string,
         updateData: UpdateCartItemDto
-    ) : Promise<CartResponse> {
-        const {quantity} = updateData;
+    ): Promise<CartResponse> {
+        const { quantity } = updateData;
 
-        if(quantity > 0) {
+        if (quantity > 0) {
             const product = await productRepository.getProductById(productId);
 
-            if(!product) {
-                throw new HttpError(404, "Product not found" );
+            if (!product) {
+                throw new HttpError(404, "Product not found");
             }
 
-            if(product.stock < quantity) {
+            if (product.stock < quantity) {
                 throw new HttpError(400, `Cannot set quantity to ${quantity}. Only ${product.stock} items available in stock`);
 
             }
@@ -132,7 +145,7 @@ export class CartService {
             quantity,
         );
 
-        if(!cart) {
+        if (!cart) {
             throw new HttpError(404, "Cart or item not found");
         }
 
@@ -145,7 +158,7 @@ export class CartService {
             productId
         );
 
-        if(!cart) {
+        if (!cart) {
             throw new HttpError(404, "Cart or item not found");
         }
 
@@ -155,7 +168,7 @@ export class CartService {
     async clearCart(user: IUser): Promise<CartResponse> {
         const cart = await cartRepository.clearCart(user._id.toString());
 
-        if(!cart) {
+        if (!cart) {
             throw new HttpError(404, "Cart not found")
 
         }

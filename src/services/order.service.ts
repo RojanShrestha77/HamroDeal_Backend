@@ -11,10 +11,18 @@ const productRepo = new ProductRepository();
 
 export class OrderService {
     async createOrder(data: CreateOrderDtoType & { userId: any }) {
+        console.log('🔧 ORDER SERVICE - createOrder called');
+        console.log('📦 Items received:', JSON.stringify(data.items, null, 2));
+
         // Validate order data
         if (!data.userId || !data.items || data.items.length === 0) {
             throw new HttpError(400, "Invalid order data");
         }
+
+        // Log each item's sellerId
+        data.items.forEach((item, index) => {
+            console.log(`Item ${index}: sellerId = "${item.sellerId}" (type: ${typeof item.sellerId})`);
+        });
 
         // Calculate totals
         const subtotal = data.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -35,9 +43,12 @@ export class OrderService {
             status: "pending"
         };
 
+        console.log('💾 About to create order in database...');
         const order = await orderRepo.create(orderData);
+        console.log('✅ Order created, ID:', order._id);
 
         // ✅ CREATE NOTIFICATION for buyer
+        console.log('📧 Creating buyer notification...');
         await notificationService.createNotification({
             userId: data.userId.toString(),
             title: 'Order Placed Successfully',
@@ -46,12 +57,19 @@ export class OrderService {
             relatedId: order._id.toString(),
             actionUrl: `/orders/${order._id}`
         });
+        console.log('✅ Buyer notification created');
 
         // ✅ CREATE NOTIFICATION for each seller
         const sellerNotifications = new Map<string, string[]>();
-        
+
         for (const item of order.items) {
-            const sellerId = item.sellerId.toString();
+            // Handle both populated and non-populated sellerId
+            const sellerId = typeof item.sellerId === 'object' && item.sellerId._id
+                ? item.sellerId._id.toString()
+                : item.sellerId.toString();
+
+            console.log(`Processing seller notification for: ${sellerId}`);
+
             if (!sellerNotifications.has(sellerId)) {
                 sellerNotifications.set(sellerId, []);
             }
@@ -60,6 +78,7 @@ export class OrderService {
 
         // Send notification to each seller
         for (const [sellerId, productTitles] of sellerNotifications) {
+            console.log(`📧 Creating seller notification for: ${sellerId}`);
             await notificationService.createNotification({
                 userId: sellerId,
                 title: 'New Order Received',

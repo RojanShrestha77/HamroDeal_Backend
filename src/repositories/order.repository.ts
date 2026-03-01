@@ -6,7 +6,7 @@ export interface IOrderRepository {
     findById(id: string): Promise<IOrder | null>;
     findByUserId(userId: string, page: number, size: number): Promise<{ orders: IOrder[], total: number }>;
     findBySellerId(sellerId: string, page: number, size: number): Promise<{ orders: IOrder[], total: number }>;
-        findByUserIdUnpopulated(userId: string): Promise<IOrder[]>; // ← Add this
+    findByUserIdUnpopulated(userId: string): Promise<IOrder[]>; // ← Add this
 
     findAll(page: number, size: number, status?: string): Promise<{ orders: IOrder[], total: number }>;
     updateStatus(id: string, status: string): Promise<IOrder | null>;
@@ -20,7 +20,8 @@ export class OrderRepository implements IOrderRepository {
         const orders = await OrderModel.find({ userId })
             .sort({ createdAt: -1 })
             .lean(); // Use lean() for better performance
-        return orders;    }
+        return orders;
+    }
     async findAll(page: number, size: number, status?: string): Promise<{ orders: IOrder[]; total: number; }> {
         const filter = status ? { status } : {}
         const [orders, total] = await Promise.all([
@@ -38,13 +39,37 @@ export class OrderRepository implements IOrderRepository {
         return { orders, total };
     }
     async create(order: Partial<IOrder>): Promise<IOrder> {
+        console.log('📝 ORDER REPOSITORY - create called');
+        console.log('Order items:', JSON.stringify(order.items, null, 2));
+
+        // Validate each sellerId before creating
+        if (order.items) {
+            order.items.forEach((item, index) => {
+                console.log(`Validating item ${index}:`);
+                console.log(`  - sellerId: "${item.sellerId}"`);
+                console.log(`  - sellerId length: ${item.sellerId?.toString().length}`);
+                console.log(`  - sellerId type: ${typeof item.sellerId}`);
+            });
+        }
+
         const newOrder = new OrderModel(order);
+        console.log('✅ OrderModel created, attempting to save...');
         const saved = await newOrder.save();
-        return saved.populate([
-            { path: "userId", select: "firstname lastName email" },
-            { path: "items.productId", select: "name images price" },
-            { path: "items.sellerId", select: "firstName lastName email" }
-        ]);
+        console.log('✅ Order saved successfully');
+        console.log('📤 Attempting to populate order...');
+
+        try {
+            const populated = await saved.populate([
+                { path: "userId", select: "firstname lastName email" },
+                { path: "items.productId", select: "name images price" },
+                { path: "items.sellerId", select: "firstName lastName email" }
+            ]);
+            console.log('✅ Order populated successfully');
+            return populated;
+        } catch (error) {
+            console.error('❌ Error during populate:', error);
+            throw error;
+        }
     }
     async findById(id: string): Promise<IOrder | null> {
         const order = await OrderModel.findById(id).populate([

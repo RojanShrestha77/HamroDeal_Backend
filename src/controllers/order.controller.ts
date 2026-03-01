@@ -6,9 +6,12 @@ const orderService = new OrderService();
 export class OrderController {
     async createOrder(req: Request, res: Response) {
         try {
+            console.log('📦 CREATE ORDER - Request body:', JSON.stringify(req.body, null, 2));
+
             const parsedData = CreateOrderDto.safeParse(req.body);
 
             if (!parsedData.success) {
+                console.log('❌ Validation failed:', parsedData.error);
                 return res.status(400).json({
                     success: false,
                     message: "validation failed",
@@ -17,10 +20,14 @@ export class OrderController {
             }
 
             const userId = req.user?._id;
+            console.log('👤 User ID:', userId);
+
             const orderData = {
                 ...parsedData.data,
                 userId
             };
+
+            console.log('📋 Order data items:', JSON.stringify(orderData.items, null, 2));
 
             const order = await orderService.createOrder(orderData);
 
