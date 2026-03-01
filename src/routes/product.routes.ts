@@ -15,8 +15,8 @@ router.get("/trending", productController.getTrendingProducts);
 
 // =================== seller or admin =========================
 router.get("/my-products", authorizedMiddleware, sellerOrAdminMiddleware, productController.getMyProducts);
-router.post("/", authorizedMiddleware, sellerOrAdminMiddleware, uploads.single('images'), productController.createProduct);
-router.put("/:id", authorizedMiddleware, sellerOrAdminMiddleware, uploads.single('images'), productController.updateProduct);
+router.post("/", authorizedMiddleware, sellerOrAdminMiddleware, uploads.array('images', 5), productController.createProduct);
+router.put("/:id", authorizedMiddleware, sellerOrAdminMiddleware, uploads.array('images', 5), productController.updateProduct);
 router.delete("/:id", authorizedMiddleware, sellerOrAdminMiddleware, productController.deleteProduct);
 
 // =================== dynamic routes =========================

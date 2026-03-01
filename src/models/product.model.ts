@@ -1,4 +1,3 @@
-// models/product.model.ts
 import mongoose, { Schema, Document } from "mongoose";
 
 const ProductMongoSchema: Schema = new Schema(
@@ -22,13 +21,13 @@ const ProductMongoSchema: Schema = new Schema(
       default: 0
     },
     images: {
-      type: String,
+      type: [String],
       required: false,
-      
+      default: []
     },
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:'Category',
+      ref: 'Category',
       required: true,
     },
     sellerId: {
@@ -58,14 +57,14 @@ const ProductMongoSchema: Schema = new Schema(
   }
 );
 
-export interface IProduct extends  Document {
+export interface IProduct extends Document {
   _id: mongoose.Types.ObjectId;
   title: string;
   description: string;
   price: number;
   stock: number;
-  images?: string;
-  categoryId:mongoose.Types.ObjectId;
+  images?: string[];
+  categoryId: mongoose.Types.ObjectId;
   sellerId: mongoose.Types.ObjectId;
   soldCount: number;
   viewCount: number;
