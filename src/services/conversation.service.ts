@@ -6,7 +6,7 @@ import { HttpError } from "../errors/http-error";
 const conversationRepo: IConversationRepository = new ConversationRepository();
 
 export class ConversationService {
-    async createOrGetConversation(userId: string, otherUserId: string): Promise<IConversation> {
+    async createOrGetConversation(userId: string, otherUserId: string): Promise<any> {
         if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(otherUserId)) {
             throw new HttpError(400, 'Invalid user ID');
         }
@@ -15,49 +15,60 @@ export class ConversationService {
             throw new HttpError(400, 'Cannot create convesation with yourself');
         }
 
-        const existingConversation = await conversationRepo.findByParticipants(userId, otherUserId);
-        if (existingConversation) {
-            return existingConversation;
+        let conversation = await conversationRepo.findByParticipants(userId, otherUserId);
+        if (!conversation) {
+            // create new convo
+            conversation = await conversationRepo.create([userId, otherUserId]);
         }
 
-        // create new convo
-        const conversation = await conversationRepo.create([userId, otherUserId]);
-        return conversation;
+        // Format response to match getUserConversations format
+        const otherUser = conversation.participants.find(
+            (p: any) => (p._id ? p._id.toString() : p.toString()) !== userId
+        );
+
+        return {
+            _id: conversation._id,
+            otherUser: otherUser,
+            lastMessage: conversation.lastMessage,
+            unreadCount: conversation.unreadCount.get(userId) || 0,
+            createdAt: conversation.createdAt,
+            updatedAt: conversation.updatedAt,
+        };
     }
 
     async getConversationById(conversationId: string, userId: string): Promise<any> {
-    if (!mongoose.Types.ObjectId.isValid(conversationId)) {
-        throw new HttpError(400, 'Invalid conversation ID');
+        if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+            throw new HttpError(400, 'Invalid conversation ID');
+        }
+
+        const conversation = await conversationRepo.findById(conversationId);
+        if (!conversation) {
+            throw new HttpError(404, 'Conversation not found');
+        }
+
+        // verify user is participant
+        const isParticipant = conversation.participants.some(
+            (p: any) => (p._id ? p._id.toString() : p.toString()) === userId
+        );
+        if (!isParticipant) {
+            throw new HttpError(403, 'Access denied');
+        }
+
+        // Format response to match getUserConversations format
+        const otherUser = conversation.participants.find(
+            (p: any) => (p._id ? p._id.toString() : p.toString()) !== userId
+        );
+
+        return {
+            _id: conversation._id,
+            otherUser: otherUser,
+            lastMessage: conversation.lastMessage,
+            unreadCount: conversation.unreadCount.get(userId) || 0,
+            createdAt: conversation.createdAt,
+            updatedAt: conversation.updatedAt,
+        };
     }
 
-    const conversation = await conversationRepo.findById(conversationId);
-    if (!conversation) {
-        throw new HttpError(404, 'Conversation not found');
-    }
-
-    // verify user is participant
-    const isParticipant = conversation.participants.some(
-        (p: any) => (p._id ? p._id.toString() : p.toString()) === userId
-    );
-    if (!isParticipant) {
-        throw new HttpError(403, 'Access denied');
-    }
-
-    // Format response to match getUserConversations format
-    const otherUser = conversation.participants.find(
-        (p: any) => (p._id ? p._id.toString() : p.toString()) !== userId
-    );
-
-    return {
-        _id: conversation._id,
-        otherUser: otherUser,
-        lastMessage: conversation.lastMessage,
-        unreadCount: conversation.unreadCount.get(userId) || 0,
-        createdAt: conversation.createdAt,
-        updatedAt: conversation.updatedAt,
-    };
-    }
- 
 
 
     async getUserConversations(userId: string, page: number = 1, size: number = 20) {

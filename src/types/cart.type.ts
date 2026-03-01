@@ -10,16 +10,17 @@ export const CartItemSchema = z.object({
 });
 
 export const PopulatedProductSchema = z.object({
-  _id: z.instanceof(mongoose.Types.ObjectId),
+  _id: z.string(),
   title: z.string(),
   description: z.string(),
   price: z.number(),
   stock: z.number(),
   images: z.string().optional(),
+  sellerId: z.string().optional(),
 });
 
 export const PopulatedCartItemSchema = z.object({
-  productId: PopulatedProductSchema,
+  productId: z.union([PopulatedProductSchema, z.string()]),
   quantity: z.number().int().min(1),
   price: z.number().min(0),
 });

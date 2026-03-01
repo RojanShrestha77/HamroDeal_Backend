@@ -17,14 +17,14 @@ export class ReviewRepository implements IReviewRepository {
         const newReview = new ReviewModel(review);
         const saved = await newReview.save();
         return saved.populate([
-            { path: "userId", select: "firstName lastName" },
+            { path: "userId", select: "firstName lastName imageUrl" },
             { path: "productId", select: "name" }
         ]);
     }
 
     async findById(id: string): Promise<IReview | null> {
         return await ReviewModel.findById(id).populate([
-            { path: "userId", select: "firstName lastName" },
+            { path: "userId", select: "firstName lastName imageUrl" },
             { path: "productId", select: "name" }
         ]);
     }
@@ -35,7 +35,7 @@ export class ReviewRepository implements IReviewRepository {
                 .sort({ createdAt: -1 })
                 .skip((page - 1) * size)
                 .limit(size)
-                .populate("userId", "firstName lastName"),
+                .populate("userId", "firstName lastName imageUrl"),
             ReviewModel.countDocuments({ productId })
         ]);
         return { reviews, total };
@@ -53,7 +53,7 @@ export class ReviewRepository implements IReviewRepository {
 
     async update(id: string, data: Partial<IReview>): Promise<IReview | null> {
         return await ReviewModel.findByIdAndUpdate(id, data, { new: true }).populate([
-            { path: "userId", select: "firstName lastName" },
+            { path: "userId", select: "firstName lastName imageUrl" },
             { path: "productId", select: "name" }
         ]);
     }
@@ -64,11 +64,11 @@ export class ReviewRepository implements IReviewRepository {
     }
 
     async getAverageRating(productId: string): Promise<number> {
-    const result = await ReviewModel.aggregate([
-        { $match: { productId: new mongoose.Types.ObjectId(productId) } },  // Convert to ObjectId
-        { $group: { _id: null, avgRating: { $avg: "$rating" } } }
-    ]);
-    return result[0]?.avgRating || 0;
-}
+        const result = await ReviewModel.aggregate([
+            { $match: { productId: new mongoose.Types.ObjectId(productId) } },  // Convert to ObjectId
+            { $group: { _id: null, avgRating: { $avg: "$rating" } } }
+        ]);
+        return result[0]?.avgRating || 0;
+    }
 
 }
