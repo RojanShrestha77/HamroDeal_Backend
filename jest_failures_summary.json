@@ -1,0 +1,611 @@
+[
+  {
+    "suite": "src/__tests__\\integration\\category.test.ts",
+    "failures": [
+      {
+        "test": "should get single category by id",
+        "error": "Error: expect(received).toBe(expected) // Object.is equality  Expected: 200"
+      },
+      {
+        "test": "should delete category",
+        "error": "Error: expect(received).toBe(expected) // Object.is equality  Expected: 200"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\order.test.ts",
+    "failures": [
+      {
+        "test": "should create order with valid data",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail to create order without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid items array",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with missing shipping address",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid payment method",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get order by ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid order ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with non-existent order",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get user orders with pagination",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should support pagination parameters",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should cancel own order",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid order ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with non-existent order",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should delete order",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid order ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with non-existent order",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\product.test.ts",
+    "failures": [
+      {
+        "test": "should create product with valid data",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with missing title",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with missing description",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid price",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid stock",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid category ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get all products",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should filter products by category",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should filter products by price range",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should sort products",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get product by ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should search products by query",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should return empty array for non-matching search",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get products by category",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without category ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get newest products",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should support limit parameter",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get trending products",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should support limit and days parameters",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should update product with valid data",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid price",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should delete product",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should get seller products",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "MongoServerError: E11000 duplicate key error collection: hamro_deal.categories index: name_1 dup key: { name: \"Test Category\" }     at InsertOneOperation.handleOk (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\insert.ts:79:13)     at tryOperation (C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:294:26)"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\blog.test.ts",
+    "failures": [
+      {
+        "test": "should get single blog",
+        "error": "Error: expect(received).toBe(expected) // Object.is equality  Expected: 200"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\message.test.ts",
+    "failures": [
+      {
+        "test": "should send a message with authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail to send message without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with invalid conversation ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with non-existent conversation",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail if user is not a participant",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with missing text",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with empty text",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with whitespace-only text",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should return proper error response format on invalid conversation ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should return proper error response format on missing text",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should get messages from conversation",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with invalid conversation ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with non-existent conversation",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should support pagination",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should delete own message",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail to delete without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail to delete other user's message",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with invalid message ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with non-existent message",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with malformed message ID (too short)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with malformed message ID (non-hex characters)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with empty message ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should return proper error response format on authorization failure",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should return proper error response format on not found",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should return proper error response format on invalid ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should mark messages as read",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      },
+      {
+        "test": "should fail with invalid conversation ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\message.test.ts:35:5"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\cart.test.ts",
+    "failures": [
+      {
+        "test": "should add item to cart",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with missing product ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with missing quantity",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid quantity (zero)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid quantity (negative)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should increase quantity if product already in cart",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should get user cart",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should return empty cart for new user",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should update cart item quantity",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with missing quantity",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid quantity (zero)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid quantity (negative)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should remove item from cart",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should clear entire cart",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should handle clearing empty cart",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      },
+      {
+        "test": "should handle concurrent cart operations",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\cart.test.ts:36:5"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\review.test.ts",
+    "failures": [
+      {
+        "test": "should create review with valid data",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid rating (too low)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid rating (too high)",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with comment too short",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with comment too long",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with missing rating",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with missing comment",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should get product reviews",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should support pagination",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid product ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with non-existent product",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should get user reviews",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should update own review",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid rating",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid review ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with non-existent review",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should delete own review",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail without authentication",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with invalid review ID",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should fail with non-existent review",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should prevent non-owner from updating review",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      },
+      {
+        "test": "should prevent non-owner from deleting review",
+        "error": "Error: thrown: \"Exceeded timeout of 5000 ms for a hook. Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout.\"     at C:\\Users\\LOQ\\Desktop\\hamro_deal_backend\\backend\\src\\__tests__\\integration\\review.test.ts:37:5"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\admin.test.ts",
+    "failures": [
+      {
+        "test": "should get single blog by id as admin",
+        "error": "Error: expect(received).toBe(expected) // Object.is equality  Expected: 200"
+      },
+      {
+        "test": "should delete blog as admin",
+        "error": "Error: expect(received).toBe(expected) // Object.is equality  Expected: 200"
+      }
+    ]
+  },
+  {
+    "suite": "src/__tests__\\integration\\auth.test.ts",
+    "failures": [
+      {
+        "test": "should register a seller",
+        "error": "Error: expect(received).toContain(expected) // indexOf  Expected value: 409"
+      },
+      {
+        "test": "should register an admin",
+        "error": "Error: expect(received).toContain(expected) // indexOf  Expected value: 409"
+      }
+    ]
+  }
+]

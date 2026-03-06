@@ -33,7 +33,7 @@ describe('Wishlist Integration Tests', () => {
 
         // Create a test category first
         const category = await CategoryModel.create({
-            name: 'Wishlist Test Category',
+            name: "Wishlist Test Category 1772755987.38481",
             description: 'For wishlist testing'
         });
         testCategoryId = category._id.toString();
@@ -53,7 +53,7 @@ describe('Wishlist Integration Tests', () => {
     afterAll(async () => {
         await UserModel.deleteMany({ email: testUser.email });
         await ProductModel.deleteMany({ title: 'Wishlist Test Product' });
-        await CategoryModel.deleteMany({ name: 'Wishlist Test Category' });
+        await CategoryModel.deleteMany({ name: "Wishlist Test Category 1772755987.38481" });
         await WishlistModel.deleteMany({});
     });
 

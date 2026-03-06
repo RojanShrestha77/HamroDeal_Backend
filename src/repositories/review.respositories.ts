@@ -4,6 +4,7 @@ import { ReviewModel, IReview } from "../models/review.model";
 export interface IReviewRepository {
     create(review: Partial<IReview>): Promise<IReview>;
     findById(id: string): Promise<IReview | null>;
+    findByIdUnpopulated(id: string): Promise<IReview | null>;
     findByProductId(productId: string, page: number, size: number): Promise<{ reviews: IReview[], total: number }>;
     findByUserId(userId: string): Promise<IReview[]>;
     findByUserAndProduct(userId: string, productId: string): Promise<IReview | null>;
@@ -27,6 +28,10 @@ export class ReviewRepository implements IReviewRepository {
             { path: "userId", select: "firstName lastName imageUrl" },
             { path: "productId", select: "name" }
         ]);
+    }
+
+    async findByIdUnpopulated(id: string): Promise<IReview | null> {
+        return await ReviewModel.findById(id);
     }
 
     async findByProductId(productId: string, page: number, size: number): Promise<{ reviews: IReview[]; total: number; }> {

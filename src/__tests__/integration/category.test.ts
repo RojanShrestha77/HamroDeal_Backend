@@ -12,7 +12,7 @@ describe('Category Integration Tests', () => {
     describe('POST /api/categories', () => {
         test('should create category', async () => {
             const categoryData = {
-                name: 'Test Category 1',
+                name: "Test Category 1772755987.33722",
                 description: 'Test category description'
             };
 

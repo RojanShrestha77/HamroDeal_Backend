@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { connectDB } from "../database/mongodb";
 
+jest.setTimeout(30000); // 30 seconds to allow DB connection and cleanup hooks to finish
+
 // before all test starts
 beforeAll(async () => {
     // can connect to test database or other test engines

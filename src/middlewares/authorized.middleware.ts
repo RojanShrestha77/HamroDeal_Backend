@@ -11,19 +11,18 @@ declare global {
             user?: Record < string, any> | IUser
         }
     }
-} // addingtag(user) to request, can use req.user
+} 
 let userRepository = new UserRepository();
-
 
 export const authorizedMiddleware = 
 async(req: Request, res: Response, next: NextFunction) => {
     try{
         const authHeader = req.headers.authorization;
-        if(!authHeader || !authHeader.startsWith('Bearer'))  // ✅ Added !
+        if(!authHeader || !authHeader.startsWith('Bearer')) 
             throw new HttpError(401, 'Unauhtorized JWT Invalid');
-        const token = authHeader.split(' ')[1]  // ✅ Changed '' to ' '
+        const token = authHeader.split(' ')[1] 
         const decodedToken = jwt.verify(token, JWT_SECRET) as Record<string, any>;
-        if(!decodedToken || !decodedToken.id){  // ✅ Also add ! here
+        if(!decodedToken || !decodedToken.id){ 
             throw new HttpError(401, "Unauthorized JWT Unverified");
         }
         const user = await userRepository.getUserByID(decodedToken.id);
@@ -76,7 +75,7 @@ export const approvedSellerMiddleware = (req: Request, res: Response, next: Next
         }
         next();
     } catch(error: Error | any) {
-        return res.status(error.statusCode || 500).json(
+        return res.status(error.statusCode || 500).json(-
             { success: false, message: error.message}
 
         )
