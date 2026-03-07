@@ -23,7 +23,7 @@ import conversationRoutes from './routes/conversation.routes';
 import messageRoutes from './routes/message.routes';
 import { socketAuthMiddleware } from './middlewares/socket.middleware';
 import { setupSocketHandlers } from './socket/socket.handler';
-import { createServer,  } from 'http';
+import { createServer, } from 'http';
 import { Server } from 'socket.io';
 dotenv.config();
 
@@ -38,9 +38,9 @@ const httpServer = createServer(app);
 // intialize socket.io
 const io = new Server(httpServer, {
     cors: {
-        origin: ["http://localhost:3000", "http://localhost:3003"],
+        origin: '*', // Allow all origins (dev) — restrict in production
         methods: ["GET", "POST"],
-        credentials: true
+        credentials: false
     }
 });
 
@@ -58,9 +58,7 @@ app.set('io', io);
 // decide the list of the accepted domain
 // domain of the frontend
 let corsOptions = {
-    origin: ["http://localhost:3000", "http://localhost:3003"]
-    // list of accepted domain
-
+    origin: '*', // Allow all origins (dev) — restrict in production
 }
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -126,5 +124,5 @@ app.use((err: Error, req: Request, res: Response, next: Function) => {
     return res.status(500).json({ success: false, message: err.message || "Internal Server Error" });
 });
 
-export { httpServer, io};
+export { httpServer, io };
 export default app;
