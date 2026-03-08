@@ -2,10 +2,10 @@ import { CartService } from "../../services/cart/cart.service";
 import { IUser } from "../../models/user.model";
 import { AddToCartDto, UpdateCartItemDto } from "../../dtos/cart.dtos";
 import { Request, Response } from "express";
-import {z}  from "zod";
+import { z } from "zod";
 const cartService = new CartService();
 
-export class CartController{
+export class CartController {
 
     async addToCart(req: Request, res: Response) {
         try {
@@ -13,17 +13,17 @@ export class CartController{
 
             const parsedData = AddToCartDto.safeParse(req.body);
 
-            if(!parsedData.success) {
+            if (!parsedData.success) {
                 return res.status(400).json({
-                    success: false, 
+                    success: false,
                     message: z.prettifyError(parsedData.error),
                 });
             }
 
             const cart = await cartService.addToCart(user, parsedData.data);
 
-            return res.status(200).json( {
-                success: true, 
+            return res.status(200).json({
+                success: true,
                 message: "Item added to cart successfully",
                 data: cart,
             });
@@ -31,14 +31,14 @@ export class CartController{
             console.error("Error in addTocart: ", error);
             return res.status(error.statusCode || 500).json({
                 success: false,
-                messgae: error.message || "INternal server error",
+                message: error.message || "Internal server error",
             });
 
         }
-        
+
     }
 
-    async getCart(req: Request, res:Response) {
+    async getCart(req: Request, res: Response) {
         try {
             const user = req.user as IUser;
 
@@ -46,27 +46,27 @@ export class CartController{
 
             return res.status(200).json({
                 success: true,
-                messgae: "Cart retrieved successfully",
+                message: "Cart retrieved successfully",
                 data: cart,
             });
         } catch (error: Error | any) {
             console.error("Error in getCart:", error);
             return res.status(error.statusCode || 500).json({
-                success:false,
+                success: false,
                 message: error.message || "Internal server Error"
             });
         }
     }
 
-    async updateCartItem(req: Request<{productId: string}>, res: Response) {
+    async updateCartItem(req: Request<{ productId: string }>, res: Response) {
         try {
             const user = req.user as IUser;
-            const {productId} = req.params;
-          
+            const { productId } = req.params;
+
 
             const parsedData = UpdateCartItemDto.safeParse(req.body);
 
-            if(!parsedData.success) {
+            if (!parsedData.success) {
                 return res.status(400).json({
                     success: false,
                     message: z.prettifyError(parsedData.error)
@@ -74,7 +74,7 @@ export class CartController{
             }
 
             const cart = await cartService.updateCartItem(
-                user, 
+                user,
                 productId,
                 parsedData.data
             );
@@ -95,10 +95,10 @@ export class CartController{
     }
 
     // delete
-    async removeFromCart(req: Request<{productId: string}>, res:Response) {
+    async removeFromCart(req: Request<{ productId: string }>, res: Response) {
         try {
             const user = req.user as IUser;
-            const {productId} = req.params;
+            const { productId } = req.params;
 
             const cart = await cartService.removeFromCart(user, productId);
 
@@ -119,7 +119,7 @@ export class CartController{
 
     // delete
     async clearCart(req: Request, res: Response) {
-        try{
+        try {
             const user = req.user as IUser;
 
             const cart = await cartService.clearCart(user);
@@ -131,10 +131,10 @@ export class CartController{
             });
         } catch (error: Error | any) {
             console.error("❌ Error in clearCart:", error);
-      return res.status(error.statusCode || 500).json({
-        success: false,
-        message: error.message || "Internal Server Error",
-      });
+            return res.status(error.statusCode || 500).json({
+                success: false,
+                message: error.message || "Internal Server Error",
+            });
         }
     }
 

@@ -22,7 +22,7 @@ export class CartRepository implements ICartRepository {
         }
 
         const itemIndex = cart.items.findIndex(
-            (item) => item.productId.toString() === productId
+            (item) => item.productId?.toString() === productId
         );
 
         if (itemIndex === -1) return null;
@@ -57,7 +57,7 @@ export class CartRepository implements ICartRepository {
 
         // check if product already exists in teh cart
         const existingItemIndex = cart!.items.findIndex(
-            (item) => item.productId.toString() === productId
+            (item) => item.productId?.toString() === productId
         );
 
         if (existingItemIndex > -1) {
@@ -87,7 +87,7 @@ export class CartRepository implements ICartRepository {
         if (!cart) return null;
 
         cart.items = cart.items.filter(
-            (item) => item.productId.toString() !== productId
+            (item) => item.productId?.toString() !== productId
 
         );
 

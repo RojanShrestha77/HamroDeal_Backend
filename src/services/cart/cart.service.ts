@@ -11,36 +11,38 @@ const productRepository = new ProductRepository();
 
 export class CartService {
     private calculateCartTotal(cart: ICart): number {
+        if (!cart || !cart.items) return 0;
         return cart.items.reduce((total, item) => {
-            return total + item.price * item.quantity;
+            return total + (item.price || 0) * (item.quantity || 0);
 
         }, 0);
     }
 
     private calculateItemCount(cart: ICart): number {
-        return cart.items.reduce((count, item) => count + item.quantity, 0);
+        if (!cart || !cart.items) return 0;
+        return cart.items.reduce((count, item) => count + (item.quantity || 0), 0);
     }
 
     private formatCartResponse(cart: ICart): CartResponse {
         return {
-            _id: cart._id.toString(),
-            userId: cart.userId?.toString(),
+            _id: cart._id?.toString() || '',
+            userId: cart.userId?.toString() || '',
             items: cart.items.map((item: any) => {
                 // Check if productId is populated (object) or just an ID (string)
                 const isPopulated = typeof item.productId === 'object' && item.productId !== null;
 
                 return {
                     productId: isPopulated ? {
-                        _id: item.productId._id.toString(),
-                        title: item.productId.title,
-                        description: item.productId.description,
-                        price: item.productId.price,
-                        stock: item.productId.stock,
-                        images: item.productId.images,
-                        sellerId: item.productId.sellerId?.toString() || item.productId.sellerId,
-                    } : item.productId.toString(),
-                    quantity: item.quantity,
-                    price: item.price,
+                        _id: item.productId._id?.toString() || '',
+                        title: item.productId.title || '',
+                        description: item.productId.description || '',
+                        price: item.productId.price || 0,
+                        stock: item.productId.stock || 0,
+                        images: item.productId.images || [],
+                        sellerId: item.productId.sellerId?.toString() || item.productId.sellerId || '',
+                    } : (item.productId?.toString() || ''),
+                    quantity: item.quantity || 0,
+                    price: item.price || 0,
                 };
             }),
             total: this.calculateCartTotal(cart),
@@ -76,9 +78,11 @@ export class CartService {
 
         if (existingCart) {
             const existingItem = existingCart.items.find(
-                (item) => item.productId.toString() === productId)
+                (item) => item.productId?.toString() === productId);
 
-
+            if (existingItem) {
+                currentQuantityInCart = existingItem.quantity || 0;
+            }
         }
 
         // caclulate the new total quanity
